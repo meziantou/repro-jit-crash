@@ -75,7 +75,8 @@ public sealed partial class JsRealm
             This = GlobalThis,
         };
 
-        return Interpreter.JsInterpreter.Run(frame);
+        GC.KeepAlive(frame);
+        return default;
     }
 
     private Compiler.FunctionTemplate Compile(Text.SourceText source)

@@ -1,13 +1,23 @@
-using Meziantou.Framework.JavaScriptEngine.Test262.Runner;
+using Meziantou.Framework.JavaScriptEngine;
 
-// Runs the test262 tests of built-ins/RegExp in parallel, like the xunit runner of the original project does
-var tests = Test262Discovery.Discover("built-ins/RegExp").Runnable;
-Console.WriteLine($"Running {tests.Count} tests");
-var completed = 0;
-Parallel.ForEach(tests, test =>
+var repeat = args.Length > 0 ? int.Parse(args[0]) : 500_000;
+Parallel.For(0, repeat, _ => RunMode("var x = 1 + 1;"));
+Console.WriteLine("Done");
+
+static string? RunMode(string source)
 {
-    Test262Executor.Run(test);
-    Interlocked.Increment(ref completed);
-});
+    var engine = new JsEngine(new JsEngineOptions());
+    var realm = engine.CreateRealm();
+    foreach (var include in GetIncludes())
+    {
+        realm.Execute("var harness = 1;", include);
+    }
 
-Console.WriteLine($"Done: {completed} tests ran without crashing the process");
+    return null;
+}
+
+static IEnumerable<string> GetIncludes()
+{
+    yield return "assert.js";
+    yield return "sta.js";
+}
