@@ -17,11 +17,7 @@ internal sealed class Frame
     {
         Values = new JsValue[code.RegisterCount + arguments.Length + code.MaxStack];
         Code = code;
-        Realm = realm;
-        Environment = environment;
-        ArgumentCount = arguments.Length;
         arguments.CopyTo(Values.AsSpan(code.RegisterCount));
-        Sp = code.RegisterCount + arguments.Length;
     }
 
     public FunctionTemplate Code { get; private set; } = null!;
