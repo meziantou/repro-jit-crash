@@ -73,6 +73,10 @@ step by step, keeping a step only when the crash still happened in 4/4 runs:
 - Of the runner, only the engine creation, the realm and the loop over the includes (an iterator method) are needed:
   the cancellation token, the engine options, the module loader, the agents (threads), the host objects, the
   `try`/`catch`, the strict mode, the metadata, the result handling and the `using`/`Dispose` of the engine are not.
+- `JsRealm` no longer installs the built-ins (`Intrinsics.Initialize()` and `DefineGlobalBindings` are not called): a
+  realm without globals is enough. The built-in sources are still compiled; deleting them needs hand-fixing the
+  `Intrinsics.*` partial files and the helpers the runtime shares with `Builtins/` (an automatic line-based deletion
+  left broken statements).
 - In the engine, `JsRealm.Execute` still has to parse and compile the script and to create the interpreter frame, but
   the interpreter does not have to run it (`JsRealm.Run` returns `default` instead).
 
