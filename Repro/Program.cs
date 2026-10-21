@@ -109,9 +109,9 @@ internal sealed class FunctionTemplate
 {
     public required int[] Code { get; init; }
     public required JsValue[] Constants { get; init; }
-    public required PropertyKey[] Keys { get; init; }
+    public required int[] Keys { get; init; }
     public required object[] Objects { get; init; }
-    public required ExceptionHandler[] Handlers { get; init; }
+    public required int[] Handlers { get; init; }
     public required int[] Positions { get; init; }
     public required int SourceStart { get; init; }
     public required int SourceEnd { get; init; }
@@ -150,8 +150,3 @@ public class JsObject : JsCell
 {
 }
 
-internal readonly struct PropertyKey
-{
-}
-
-internal readonly record struct ExceptionHandler(int Start, int End, int Target, int StackDepth, int EnvironmentRegister);
