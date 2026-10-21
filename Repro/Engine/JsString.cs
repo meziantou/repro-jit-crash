@@ -22,14 +22,6 @@ internal sealed class JsString : JsCell, IEquatable<JsString>
         Length = value.Length;
     }
 
-    private JsString(JsString left, JsString right)
-        : base(JsValueKind.String)
-    {
-        _left = left;
-        _right = right;
-        Length = left.Length + right.Length;
-    }
-
     public int Length { get; }
 
     public override string ToString()

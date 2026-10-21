@@ -32,25 +32,6 @@ internal readonly struct PropertyKey : IEquatable<PropertyKey>
         }
     }
 
-    public PropertyKey(JsSymbol symbol)
-    {
-        _value = symbol;
-        _index = NotAnIndex;
-    }
-
-    public PropertyKey(uint index)
-    {
-        Debug.Assert(index != NotAnIndex);
-        _value = null;
-        _index = index;
-    }
-
-    private PropertyKey(object? value, uint index)
-    {
-        _value = value;
-        _index = index;
-    }
-
     /// <summary>Gets the string of a string key (an index is formatted).</summary>
     public string AsString() => _value as string ?? _index.ToString(CultureInfo.InvariantCulture);
 

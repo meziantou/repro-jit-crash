@@ -29,36 +29,13 @@ internal sealed class Shape : PropertyMap
     /// <summary>The shape of the arrays without named properties (other than length).</summary>
     public static readonly Shape EmptyArray = new(ShapeKind.Array);
 
-    // The keys and attributes of the properties in insertion order. A child shape shares the table of its parent when it is
-    // the first to extend it (the table then has more entries than this shape: only the first Count entries belong to it).
-    private readonly ShapeTable? _table;
-
     private Shape(ShapeKind kind)
     {
         Kind = kind;
     }
 
-    private Shape(Shape parent, ShapeTable table)
-    {
-        Kind = parent.Kind;
-        Parent = parent;
-        _table = table;
-        Count = parent.Count + 1;
-    }
-
     /// <summary>Gets the kind of the objects that use the shape (the root of the tree).</summary>
     public ShapeKind Kind { get; }
-
-    /// <summary>Gets the shape without the last property, if any.</summary>
-    public Shape? Parent { get; }
-
-    /// <summary>Gets the number of properties (and the number of slots used by the objects).</summary>
-    public int Count { get; }
-
-    /// <summary>The keys and attributes of a branch of shapes (shared by a shape and its first descendants).</summary>
-    private sealed class ShapeTable
-    {
-    }
 }
 
 /// <summary>The kinds of objects that can share shapes: the objects whose named properties are all ordinary.</summary>
