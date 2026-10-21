@@ -12,8 +12,6 @@ internal sealed class JsString : JsCell, IEquatable<JsString>
 {
 
     private string? _value;
-    private JsString? _left;
-    private JsString? _right;
 
     private JsString(string value)
         : base(JsValueKind.String)
@@ -23,35 +21,6 @@ internal sealed class JsString : JsCell, IEquatable<JsString>
     }
 
     public int Length { get; }
-
-    private void Flatten()
-    {
-        // Iterative, so that a deep rope does not overflow the stack
-        var result = string.Create(Length, this, static (span, root) =>
-        {
-            var stack = new Stack<JsString>();
-            stack.Push(root);
-            var position = 0;
-            while (stack.Count > 0)
-            {
-                var node = stack.Pop();
-                if (node._value is { } value)
-                {
-                    value.CopyTo(span[position..]);
-                    position += value.Length;
-                }
-                else
-                {
-                    stack.Push(node._right!);
-                    stack.Push(node._left!);
-                }
-            }
-        });
-
-        _value = result;
-        _left = null;
-        _right = null;
-    }
 
     public bool Equals([NotNullWhen(true)] JsString? other)
     {

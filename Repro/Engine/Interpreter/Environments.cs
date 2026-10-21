@@ -7,11 +7,6 @@ internal abstract class Environment(Environment? outer) : JsCell(JsValueKind.Und
 {
 }
 
-/// <summary>A binding of the declarative record of a global environment (let, const and class of the scripts).</summary>
-internal sealed class GlobalLexicalBinding
-{
-}
-
 /// <summary>The global environment of a realm: the global object and the lexical bindings of the scripts.</summary>
 internal sealed class GlobalEnvironment(JsRealm realm) : Environment(outer: null)
 {

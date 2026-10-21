@@ -25,35 +25,5 @@ public partial class JsObject : JsCell
         _map = Shape.EmptyOrdinary;
     }
 
-    internal ObjectFlags Flags
-    {
-        get => _flags;
-        set
-        {
-            _flags = value;
-
-            // An exotic object does not share the shapes of the ordinary objects: the inline caches would skip its internal methods
-            if ((value & ObjectFlags.Exotic) != 0 && ReferenceEquals(_map, Shape.EmptyOrdinary))
-            {
-                _map = GetEmptyShape();
-            }
-        }
-    }
-
     internal ObjectClass Class { get; set; }
-
-    internal bool IsExotic => (Flags & ObjectFlags.Exotic) != 0;
-
-    /// <summary>Gets the empty shape of the kind of the object, or null when its named properties are exotic (it uses a property table).</summary>
-    private Shape? GetEmptyShape()
-    {
-        if (!IsExotic)
-            return Shape.EmptyOrdinary;
-
-        return this switch
-        {
-            JsArray => Shape.EmptyArray,
-            _ => null,
-        };
-    }
 }

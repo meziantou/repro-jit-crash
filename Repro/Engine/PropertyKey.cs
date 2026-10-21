@@ -18,9 +18,6 @@ internal readonly struct PropertyKey : IEquatable<PropertyKey>
     private readonly object? _value;
     private readonly uint _index;
 
-    /// <summary>Gets the string of a string key (an index is formatted).</summary>
-    public string AsString() => _value as string ?? _index.ToString(CultureInfo.InvariantCulture);
-
     public bool Equals(PropertyKey other)
     {
         if (_index != NotAnIndex || other._index != NotAnIndex)
@@ -30,32 +27,5 @@ internal readonly struct PropertyKey : IEquatable<PropertyKey>
             return other._value is string b && string.Equals(a, b, StringComparison.Ordinal);
 
         return ReferenceEquals(_value, other._value);
-    }
-
-    /// <summary>Gets whether a string is the canonical form of an array index (https://tc39.es/ecma262/#array-index).</summary>
-    public static bool TryParseArrayIndex(string value, out uint index)
-    {
-        index = 0;
-        if (value.Length is 0 or > 10)
-            return false;
-
-        var first = value[0];
-        if (first is < '0' or > '9' || (first == '0' && value.Length > 1))
-            return false;
-
-        ulong result = 0;
-        foreach (var c in value)
-        {
-            if (c is < '0' or > '9')
-                return false;
-
-            result = (result * 10) + (uint)(c - '0');
-        }
-
-        if (result >= NotAnIndex)
-            return false;
-
-        index = (uint)result;
-        return true;
     }
 }

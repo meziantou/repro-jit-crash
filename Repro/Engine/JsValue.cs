@@ -22,13 +22,6 @@ public readonly struct JsValue : IEquatable<JsValue>
         _number = 0;
     }
 
-    /// <summary>Creates a number value.</summary>
-    public JsValue(double value)
-    {
-        Cell = NumberCell.Instance;
-        _number = value;
-    }
-
     /// <summary>Gets the type of the value.</summary>
     public JsValueKind Kind
     {

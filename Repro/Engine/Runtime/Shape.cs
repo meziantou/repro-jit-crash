@@ -26,9 +26,6 @@ internal sealed class Shape : PropertyMap
     /// <summary>The shape of the ordinary objects without named properties.</summary>
     public static readonly Shape EmptyOrdinary = new(ShapeKind.Ordinary);
 
-    /// <summary>The shape of the arrays without named properties (other than length).</summary>
-    public static readonly Shape EmptyArray = new(ShapeKind.Array);
-
     private Shape(ShapeKind kind)
     {
         Kind = kind;

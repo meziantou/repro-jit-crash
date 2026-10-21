@@ -21,15 +21,3 @@ internal sealed class NumberCell : JsCell
     {
     }
 }
-
-internal sealed class BooleanCell : JsCell
-{
-
-    private BooleanCell(bool value)
-        : base(JsValueKind.Boolean)
-    {
-        Value = value;
-    }
-
-    public bool Value { get; }
-}
