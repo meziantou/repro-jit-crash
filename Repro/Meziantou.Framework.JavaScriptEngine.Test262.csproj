@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Meziantou.Framework.JavaScriptEngine.Test262</RootNamespace>
+    <!-- Each test creates its own engines: the server GC keeps the parallel tests from pausing each other -->
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../src/JavaScriptEngine/Meziantou.Framework.JavaScriptEngine.csproj" />
+  </ItemGroup>
+</Project>
