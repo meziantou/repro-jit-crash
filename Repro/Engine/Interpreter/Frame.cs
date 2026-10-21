@@ -16,12 +16,6 @@ internal sealed class Frame
     public Frame(FunctionTemplate code, JsRealm realm, Environment environment, ReadOnlySpan<JsValue> arguments)
     {
         Values = new JsValue[code.RegisterCount + arguments.Length + code.MaxStack];
-        Initialize(code, realm, environment, arguments);
-    }
-
-    /// <summary>Prepares the frame for a call (a new frame, or a frame of the pool whose values are cleared).</summary>
-    internal void Initialize(FunctionTemplate code, JsRealm realm, Environment environment, ReadOnlySpan<JsValue> arguments)
-    {
         Code = code;
         Realm = realm;
         Environment = environment;
