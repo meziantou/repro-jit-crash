@@ -67,7 +67,6 @@ public sealed class JsRealm(JsEngine engine)
     private JsValue Run(string source, FunctionTemplate template)
     {
         var frame = new Frame(template, []);
-        GC.KeepAlive(frame);
         return default;
     }
 
