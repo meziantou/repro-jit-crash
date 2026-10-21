@@ -86,7 +86,6 @@ public sealed class JsRealm
     {
         return new FunctionTemplate
         {
-            Length = 0,
             Code = [],
             Constants = [],
             Keys = [],
@@ -108,7 +107,6 @@ internal sealed class SourceText(string text, string? url)
 
 internal sealed class FunctionTemplate
 {
-    public required int Length { get; init; }
     public required int[] Code { get; init; }
     public required JsValue[] Constants { get; init; }
     public required PropertyKey[] Keys { get; init; }
