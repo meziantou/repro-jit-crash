@@ -6,22 +6,12 @@ public sealed partial class JsRealm
     internal JsRealm(JsEngine engine)
     {
         Engine = engine;
-        var previousRealm = engine.CurrentRealm;
-        engine.CurrentRealm = this;
-        try
-        {
-            Intrinsics = null!;
-            GlobalObject = new JsObject(prototype: null);
-            GlobalThis = new JsValue(GlobalObject);
-            GlobalEnvironment = null!;
-        }
-        finally
-        {
-            engine.CurrentRealm = previousRealm ?? this;
-        }
+        Intrinsics = null!;
+        GlobalObject = new JsObject(prototype: null);
+        GlobalThis = new JsValue(GlobalObject);
+        GlobalEnvironment = null!;
     }
 
-    /// <summary>Gets the engine (the agent) of the realm.</summary>
     public JsEngine Engine { get; }
 
     /// <summary>Gets the global object ([[GlobalObject]]).</summary>
