@@ -2,7 +2,7 @@
 set -u
 cd "$(dirname "$0")"
 dotnet build Repro -c Release || exit 1
-bin=./artifacts/bin/Meziantou.Framework.JavaScriptEngine.Test262/release/Meziantou.Framework.JavaScriptEngine.Test262
+bin=./Repro/bin/Release/net11.0/Repro
 for i in 1 2 3; do
   "$bin" > /dev/null 2>&1
   echo "default run $i: exit $? (139 = crash)"
