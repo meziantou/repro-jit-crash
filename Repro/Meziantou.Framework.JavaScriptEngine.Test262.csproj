@@ -6,6 +6,5 @@
     <ServerGarbageCollection>true</ServerGarbageCollection>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../src/JavaScriptEngine/Meziantou.Framework.JavaScriptEngine.csproj" />
   </ItemGroup>
 </Project>
