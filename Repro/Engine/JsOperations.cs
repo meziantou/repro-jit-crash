@@ -13,36 +13,8 @@ internal static class JsOperations
 
     /// <summary>SameValue(x, y)</summary>
     internal static bool SameValue(JsValue x, JsValue y)
-    {
-        if (x.IsNumber)
-        {
-            if (!y.IsNumber)
-                return false;
-
-            var a = x.NumberValue;
-            var b = y.NumberValue;
-            if (double.IsNaN(a))
-                return double.IsNaN(b);
-
-            return a.Equals(b) && double.IsNegative(a) == double.IsNegative(b);
-        }
-
-        return SameValueNonNumber(x, y);
-    }
+    { throw null!; }
 
     private static bool SameValueNonNumber(JsValue x, JsValue y)
-    {
-        if (ReferenceEquals(x.Cell, y.Cell))
-            return true;
-
-        if (x.Kind != y.Kind)
-            return false;
-
-        return x.Kind switch
-        {
-            JsValueKind.String => x.AsJsString().Equals(y.AsJsString()),
-            JsValueKind.BigInt => x.AsBigInt() == y.AsBigInt(),
-            _ => false,
-        };
-    }
+    { throw null!; }
 }

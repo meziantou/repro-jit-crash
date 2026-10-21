@@ -13,5 +13,5 @@ public readonly struct JsEngineScope : IDisposable, IEquatable<JsEngineScope>
     public void Dispose() => JsEngine.RestoreCurrent(_previous);
 
     /// <inheritdoc/>
-    public bool Equals(JsEngineScope other) => ReferenceEquals(_previous, other._previous);
+    public bool Equals(JsEngineScope other) => throw null!;
 }

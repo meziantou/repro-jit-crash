@@ -19,13 +19,5 @@ internal readonly struct PropertyKey : IEquatable<PropertyKey>
     private readonly uint _index;
 
     public bool Equals(PropertyKey other)
-    {
-        if (_index != NotAnIndex || other._index != NotAnIndex)
-            return _index == other._index;
-
-        if (_value is string a)
-            return other._value is string b && string.Equals(a, b, StringComparison.Ordinal);
-
-        return ReferenceEquals(_value, other._value);
-    }
+    { throw null!; }
 }

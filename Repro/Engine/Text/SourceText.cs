@@ -8,12 +8,7 @@ internal sealed class SourceText
 {
 
     public SourceText(string text, string? url = null, int lineOffset = 0, int columnOffset = 0)
-    {
-        Text = text;
-        Url = url;
-        LineOffset = lineOffset;
-        ColumnOffset = columnOffset;
-    }
+    { }
 
     public string Text { get; }
 

@@ -18,12 +18,7 @@ public partial class JsObject : JsCell
 
     internal JsObject(JsObject? prototype, ObjectClass objectClass = ObjectClass.Object)
         : base(JsValueKind.Object)
-    {
-        _prototype = prototype;
-        Class = objectClass;
-        _flags = ObjectFlags.Extensible;
-        _map = Shape.EmptyOrdinary;
-    }
+    { }
 
     internal ObjectClass Class { get; set; }
 }

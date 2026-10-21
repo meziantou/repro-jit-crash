@@ -15,21 +15,10 @@ internal sealed class JsString : JsCell, IEquatable<JsString>
 
     private JsString(string value)
         : base(JsValueKind.String)
-    {
-        _value = value;
-        Length = value.Length;
-    }
+    { }
 
     public int Length { get; }
 
     public bool Equals([NotNullWhen(true)] JsString? other)
-    {
-        if (other is null)
-            return false;
-
-        if (ReferenceEquals(this, other))
-            return true;
-
-        return Length == other.Length && string.Equals(ToString(), other.ToString(), StringComparison.Ordinal);
-    }
+    { throw null!; }
 }

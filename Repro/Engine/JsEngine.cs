@@ -15,10 +15,7 @@ public sealed partial class JsEngine : IDisposable
 
     /// <summary>Initializes a new instance of the <see cref="JsEngine"/> class.</summary>
     public JsEngine(JsEngineOptions? options = null)
-    {
-        Options = options ?? new JsEngineOptions();
-        HostHooks = Options.Host ?? JsHost.Default;
-    }
+    { }
 
     /// <summary>Gets the options of the engine.</summary>
     public JsEngineOptions Options { get; }

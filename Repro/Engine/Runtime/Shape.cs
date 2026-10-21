@@ -27,9 +27,7 @@ internal sealed class Shape : PropertyMap
     public static readonly Shape EmptyOrdinary = new(ShapeKind.Ordinary);
 
     private Shape(ShapeKind kind)
-    {
-        Kind = kind;
-    }
+    { }
 
     /// <summary>Gets the kind of the objects that use the shape (the root of the tree).</summary>
     public ShapeKind Kind { get; }

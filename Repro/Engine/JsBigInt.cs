@@ -7,9 +7,7 @@ internal sealed class JsBigInt : JsCell
 
     public JsBigInt(BigInteger value)
         : base(JsValueKind.BigInt)
-    {
-        Value = value;
-    }
+    { }
 
     public BigInteger Value { get; }
 }

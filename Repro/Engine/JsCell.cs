@@ -4,9 +4,7 @@ namespace Meziantou.Framework.JavaScriptEngine;
 public abstract class JsCell
 {
     private protected JsCell(JsValueKind kind)
-    {
-        Kind = kind;
-    }
+    { }
 
     internal JsValueKind Kind { get; }
 }
