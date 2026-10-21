@@ -53,14 +53,9 @@ public readonly struct JsEngineScope : IDisposable
     public void Dispose() => JsEngine.RestoreCurrent(_previous);
 }
 
-public sealed class JsRealm
+public sealed class JsRealm(JsEngine engine)
 {
-    internal JsRealm(JsEngine engine)
-    {
-        Engine = engine;
-    }
-
-    public JsEngine Engine { get; }
+    public JsEngine Engine { get; } = engine;
 
     public JsValue Execute(string code)
     {
