@@ -58,15 +58,9 @@ public sealed class JsRealm
     internal JsRealm(JsEngine engine)
     {
         Engine = engine;
-        GlobalObject = new JsObject();
-        GlobalThis = new JsValue(GlobalObject);
     }
 
     public JsEngine Engine { get; }
-
-    public JsObject GlobalObject { get; }
-
-    public JsValue GlobalThis { get; }
 
     public JsValue Execute(string code, string? url = null)
     {
@@ -143,10 +137,6 @@ public readonly struct JsValue
 }
 
 public abstract class JsCell
-{
-}
-
-public class JsObject : JsCell
 {
 }
 
