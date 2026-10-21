@@ -38,7 +38,7 @@ public sealed partial class JsRealm
 
     private JsValue Run(Text.SourceText source, Compiler.FunctionTemplate template, object? hostDefined, bool mutedErrors)
     {
-        var frame = new Interpreter.Frame(template, this, GlobalEnvironment, []);
+        var frame = new Interpreter.Frame(template, []);
         GC.KeepAlive(frame);
         return default;
     }

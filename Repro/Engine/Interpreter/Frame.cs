@@ -13,25 +13,20 @@ namespace Meziantou.Framework.JavaScriptEngine.Interpreter;
 /// </remarks>
 internal sealed class Frame
 {
-    public Frame(FunctionTemplate code, JsRealm realm, Environment environment, ReadOnlySpan<JsValue> arguments)
+    public Frame(FunctionTemplate code, ReadOnlySpan<JsValue> arguments)
     {
         Values = new JsValue[code.RegisterCount + arguments.Length + code.MaxStack];
         arguments.CopyTo(Values.AsSpan(code.RegisterCount));
     }
 
-    public FunctionTemplate Code { get; private set; } = null!;
 
-    public JsRealm Realm { get; private set; } = null!;
 
     /// <summary>Gets or sets the current lexical environment.</summary>
-    public Environment Environment { get; set; } = null!;
 
     /// <summary>Gets the registers, the arguments, then the operand stack.</summary>
     public JsValue[] Values { get; internal set; }
 
     /// <summary>Gets or sets the position of the top of the operand stack in <see cref="Values"/>.</summary>
-    public int Sp { get; set; }
 
     /// <summary>Gets the number of arguments (stored after the registers).</summary>
-    public int ArgumentCount { get; private set; }
 }
