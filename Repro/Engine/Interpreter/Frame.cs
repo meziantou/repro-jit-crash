@@ -34,9 +34,6 @@ internal sealed class Frame
 
     public JsRealm Realm { get; private set; } = null!;
 
-    /// <summary>Gets or sets the this binding (a hole in a derived constructor before super()).</summary>
-    public JsValue This { get; set; }
-
     /// <summary>Gets or sets the current lexical environment.</summary>
     public Environment Environment { get; set; } = null!;
 
@@ -48,6 +45,4 @@ internal sealed class Frame
 
     /// <summary>Gets the number of arguments (stored after the registers).</summary>
     public int ArgumentCount { get; private set; }
-
-    public IScriptOrModule? Script { get; set; }
 }

@@ -23,9 +23,6 @@ public sealed partial class JsEngine : IDisposable
     /// <summary>Gets the options of the engine.</summary>
     public JsEngineOptions Options { get; }
 
-    /// <summary>Gets the realm of the running execution context (the current realm).</summary>
-    public JsRealm? CurrentRealm { get; internal set; }
-
     /// <summary>Creates a realm with its intrinsics and an ordinary global object.</summary>
     public JsRealm CreateRealm()
     {
