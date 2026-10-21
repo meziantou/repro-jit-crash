@@ -38,13 +38,7 @@ public sealed partial class JsRealm
 
     private JsValue Run(Text.SourceText source, Compiler.FunctionTemplate template, object? hostDefined, bool mutedErrors)
     {
-        var script = new JsScript(this, source, hostDefined, mutedErrors);
-        var frame = new Interpreter.Frame(template, this, GlobalEnvironment, [])
-        {
-            Script = script,
-            This = GlobalThis,
-        };
-
+        var frame = new Interpreter.Frame(template, this, GlobalEnvironment, []);
         GC.KeepAlive(frame);
         return default;
     }
