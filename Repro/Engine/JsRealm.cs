@@ -13,7 +13,7 @@ public sealed partial class JsRealm
             Intrinsics = null!;
             GlobalObject = new JsObject(prototype: null);
             GlobalThis = new JsValue(GlobalObject);
-            GlobalEnvironment = new Interpreter.GlobalEnvironment(this);
+            GlobalEnvironment = null!;
         }
         finally
         {
