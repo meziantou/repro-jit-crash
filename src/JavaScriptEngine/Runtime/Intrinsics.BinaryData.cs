@@ -96,6 +96,5 @@ internal sealed partial class Intrinsics
         _arrayBuffer = ArrayBufferBuiltins.Initialize(this);
         _dataView = DataViewBuiltins.Initialize(this);
         _typedArray = TypedArrayBuiltins.Initialize(this, _typedArrayConstructors);
-        _atomics = AtomicsBuiltins.Initialize(this);
     }
 }
