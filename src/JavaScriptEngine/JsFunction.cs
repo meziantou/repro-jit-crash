@@ -12,7 +12,4 @@ public abstract class JsFunction : JsObject
 
     /// <summary>Gets the realm of the function ([[Realm]]).</summary>
     public JsRealm Realm { get; }
-
-    /// <summary>Gets the name given by SetFunctionName ([[InitialName]]), used by <c>Function.prototype.toString</c>.</summary>
-    internal string? InitialName { get; private set; }
 }

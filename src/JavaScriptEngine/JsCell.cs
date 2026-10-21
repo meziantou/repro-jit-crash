@@ -38,7 +38,6 @@ internal sealed class BooleanCell : JsCell
 /// <summary>The marker of an uninitialized binding or of an array hole (its kind is <c>undefined</c>).</summary>
 internal sealed class HoleCell : JsCell
 {
-    public static readonly HoleCell Instance = new();
 
     private HoleCell()
         : base(JsValueKind.Undefined)

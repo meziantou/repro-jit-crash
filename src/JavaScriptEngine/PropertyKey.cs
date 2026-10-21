@@ -51,35 +51,6 @@ internal readonly struct PropertyKey : IEquatable<PropertyKey>
         _index = index;
     }
 
-    /// <summary>Gets the string or the symbol of the key (null for an array index): with <see cref="RawIndex"/>, a key stored without the padding of the struct.</summary>
-    public object? RawValue => _value;
-
-    /// <summary>Gets the index of the key (<see cref="uint.MaxValue"/> when it is not an array index).</summary>
-    public uint RawIndex => _index;
-
-    /// <summary>Creates a key from its <see cref="RawValue"/> and its <see cref="RawIndex"/>.</summary>
-    public static PropertyKey FromRaw(object? value, uint index) => new(value, index);
-
-    public static PropertyKey FromDouble(double value)
-    {
-        if (value >= 0 && value < NotAnIndex && value == Math.Floor(value) && !(value == 0 && double.IsNegative(value)))
-            return new PropertyKey((uint)value);
-
-        return new PropertyKey(NumberFormatting.ToString(value));
-    }
-
-    public bool IsArrayIndex
-    {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _index != NotAnIndex;
-    }
-
-    public uint ArrayIndex => _index;
-
-    public bool IsSymbol => _value is JsSymbol;
-
-    public JsSymbol AsSymbol() => (JsSymbol)_value!;
-
     /// <summary>Gets the string of a string key (an index is formatted).</summary>
     public string AsString() => _value as string ?? _index.ToString(CultureInfo.InvariantCulture);
 
@@ -94,19 +65,6 @@ internal readonly struct PropertyKey : IEquatable<PropertyKey>
         return ReferenceEquals(_value, other._value);
     }
 
-    /// <summary>Compares the key with a key stored as its <see cref="RawValue"/> and its <see cref="RawIndex"/>.</summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool EqualsRaw(object? value, uint index)
-    {
-        if (_index != NotAnIndex || index != NotAnIndex)
-            return _index == index;
-
-        if (ReferenceEquals(_value, value))
-            return true;
-
-        return _value is string a && value is string b && string.Equals(a, b, StringComparison.Ordinal);
-    }
-
     public override bool Equals([NotNullWhen(true)] object? obj) => obj is PropertyKey other && Equals(other);
 
     public override int GetHashCode()
@@ -116,8 +74,6 @@ internal readonly struct PropertyKey : IEquatable<PropertyKey>
 
         return _value is string value ? string.GetHashCode(value, StringComparison.Ordinal) : RuntimeHelpers.GetHashCode(_value!);
     }
-
-    public static implicit operator PropertyKey(string value) => new(value);
 
     public override string ToString() => _value is JsSymbol symbol ? symbol.ToString() : AsString();
 

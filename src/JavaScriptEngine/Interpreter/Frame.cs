@@ -34,9 +34,6 @@ internal sealed class Frame
 
     public JsRealm Realm { get; private set; } = null!;
 
-    /// <summary>Gets or sets the function being called (null for script and eval code).</summary>
-    public JsClosure? Function { get; set; }
-
     /// <summary>Gets or sets the this binding (a hole in a derived constructor before super()).</summary>
     public JsValue This { get; set; }
 
@@ -48,9 +45,6 @@ internal sealed class Frame
 
     /// <summary>Gets or sets the position of the top of the operand stack in <see cref="Values"/>.</summary>
     public int Sp { get; set; }
-
-    /// <summary>Gets or sets the position of the current instruction (while running) or of the next one (suspended, or a caller).</summary>
-    public int Pc { get; set; }
 
     /// <summary>Gets the number of arguments (stored after the registers).</summary>
     public int ArgumentCount { get; private set; }

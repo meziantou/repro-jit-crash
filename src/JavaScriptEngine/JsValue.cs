@@ -35,9 +35,6 @@ public readonly struct JsValue : IEquatable<JsValue>
     /// <summary>Gets the <c>false</c> value.</summary>
     public static JsValue False { get; } = new(BooleanCell.False);
 
-    /// <summary>The marker of an uninitialized binding (temporal dead zone) or of an array hole. It is never observable.</summary>
-    internal static JsValue Hole { get; } = new(HoleCell.Instance);
-
     /// <summary>Gets the type of the value.</summary>
     public JsValueKind Kind
     {
@@ -50,18 +47,6 @@ public readonly struct JsValue : IEquatable<JsValue>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => ReferenceEquals(Cell, NumberCell.Instance);
-    }
-
-    /// <summary>Gets whether the value is a string.</summary>
-    public bool IsString => Cell is JsString;
-
-    internal bool IsHole => ReferenceEquals(Cell, HoleCell.Instance);
-
-    /// <summary>Gets the number of a number value.</summary>
-    public double AsNumber()
-    {
-        Debug.Assert(IsNumber);
-        return _number;
     }
 
     /// <summary>Gets the number of a value that is known to be a number (no check).</summary>
@@ -84,20 +69,8 @@ public readonly struct JsValue : IEquatable<JsValue>
     /// <summary>Gets the object of an object value.</summary>
     public JsObject AsObject() => (JsObject)Cell!;
 
-    /// <summary>Creates a string value.</summary>
-    public static JsValue FromString(string value) => new(JsString.Create(value));
-
-    /// <summary>Creates a BigInt value.</summary>
-    public static JsValue FromBigInt(BigInteger value) => new(new JsBigInt(value));
-
-    /// <summary>Converts a number to a value.</summary>
-    public static implicit operator JsValue(double value) => new(value);
-
     /// <summary>Converts a number to a value.</summary>
     public static implicit operator JsValue(int value) => new(value);
-
-    /// <summary>Converts a string to a value.</summary>
-    public static implicit operator JsValue(string value) => FromString(value);
 
     /// <summary>Compares two values with the SameValue algorithm (https://tc39.es/ecma262/#sec-samevalue).</summary>
     public bool Equals(JsValue other) => JsOperations.SameValue(this, other);

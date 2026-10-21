@@ -79,13 +79,4 @@ public sealed partial class JsRealm
             SourceEnd = 0,
         };
     }
-
-    /// <summary>Creates a native error object of this realm.</summary>
-    internal JsObject CreateError(ErrorType type, string message)
-    {
-        var error = new JsErrorObject(Intrinsics.GetErrorPrototype(type));
-        error.DefineBuiltIn("message", message);
-        error.CaptureStackTrace(Engine);
-        return error;
-    }
 }

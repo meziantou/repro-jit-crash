@@ -23,14 +23,8 @@ public sealed partial class JsEngine : IDisposable
     /// <summary>Gets the options of the engine.</summary>
     public JsEngineOptions Options { get; }
 
-    /// <summary>Gets the engine whose code runs on the current thread, if any.</summary>
-    internal static JsEngine? Current => s_current;
-
     /// <summary>Gets the realm of the running execution context (the current realm).</summary>
     public JsRealm? CurrentRealm { get; internal set; }
-
-    /// <summary>Gets the roots of the shapes of the objects of the engine.</summary>
-    internal ShapeRoots ShapeRoots { get; } = new();
 
     /// <summary>Creates a realm with its intrinsics and an ordinary global object.</summary>
     public JsRealm CreateRealm()

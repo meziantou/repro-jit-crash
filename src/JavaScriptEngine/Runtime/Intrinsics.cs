@@ -55,6 +55,4 @@ internal sealed partial class Intrinsics
 
     /// <summary>%AsyncIteratorPrototype%</summary>
     public JsObject AsyncIteratorPrototype { get; }
-
-    public JsObject GetErrorPrototype(ErrorType type) => _errorPrototypes[(int)type];
 }

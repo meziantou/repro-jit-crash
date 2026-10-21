@@ -11,10 +11,6 @@ namespace Meziantou.Framework.JavaScriptEngine;
 internal sealed class JsString : JsCell, IEquatable<JsString>
 {
 
-    private static readonly JsString[] SingleCharacters = CreateSingleCharacters();
-
-    public static readonly JsString Empty = new(string.Empty);
-
     private string? _value;
     private JsString? _left;
     private JsString? _right;
@@ -35,17 +31,6 @@ internal sealed class JsString : JsCell, IEquatable<JsString>
     }
 
     public int Length { get; }
-
-    public static JsString Create(string value)
-    {
-        if (value.Length == 0)
-            return Empty;
-
-        if (value.Length == 1 && value[0] < SingleCharacters.Length)
-            return SingleCharacters[value[0]];
-
-        return new JsString(value);
-    }
 
     public override string ToString()
     {
@@ -99,15 +84,4 @@ internal sealed class JsString : JsCell, IEquatable<JsString>
     public override bool Equals([NotNullWhen(true)] object? obj) => obj is JsString other && Equals(other);
 
     public override int GetHashCode() => string.GetHashCode(ToString(), StringComparison.Ordinal);
-
-    private static JsString[] CreateSingleCharacters()
-    {
-        var result = new JsString[128];
-        for (var i = 0; i < result.Length; i++)
-        {
-            result[i] = new JsString(((char)i).ToString());
-        }
-
-        return result;
-    }
 }
