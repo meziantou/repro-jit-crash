@@ -8,7 +8,7 @@ static string? RunMode(string source)
     var realm = engine.CreateRealm();
     foreach (var include in GetIncludes())
     {
-        realm.Execute("var harness = 1;", include);
+        realm.Execute(include);
     }
 
     return null;
@@ -62,7 +62,7 @@ public sealed class JsRealm
 
     public JsEngine Engine { get; }
 
-    public JsValue Execute(string code, string? url = null)
+    public JsValue Execute(string code)
     {
         using var scope = Engine.Enter();
         var source = code;
