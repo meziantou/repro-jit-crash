@@ -65,18 +65,18 @@ public sealed class JsRealm
     public JsValue Execute(string code, string? url = null)
     {
         using var scope = Engine.Enter();
-        var source = new SourceText(code, url);
+        var source = code;
         return Run(source, Compile(source));
     }
 
-    private JsValue Run(SourceText source, FunctionTemplate template)
+    private JsValue Run(string source, FunctionTemplate template)
     {
         var frame = new Frame(template, []);
         GC.KeepAlive(frame);
         return default;
     }
 
-    private FunctionTemplate Compile(SourceText source)
+    private FunctionTemplate Compile(string source)
     {
         return new FunctionTemplate
         {
@@ -95,10 +95,6 @@ public sealed class JsRealm
     }
 }
 
-internal sealed class SourceText(string text, string? url)
-{
-}
-
 internal sealed class FunctionTemplate
 {
     public required int[] Code { get; init; }
@@ -113,7 +109,7 @@ internal sealed class FunctionTemplate
 
     public required int MaxStack { get; init; }
 
-    public required SourceText Source { get; init; }
+    public required string Source { get; init; }
 }
 
 internal sealed class Frame
