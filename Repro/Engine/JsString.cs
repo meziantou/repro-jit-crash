@@ -24,15 +24,6 @@ internal sealed class JsString : JsCell, IEquatable<JsString>
 
     public int Length { get; }
 
-    public override string ToString()
-    {
-        if (_value is not null)
-            return _value;
-
-        Flatten();
-        return _value!;
-    }
-
     private void Flatten()
     {
         // Iterative, so that a deep rope does not overflow the stack
@@ -72,8 +63,4 @@ internal sealed class JsString : JsCell, IEquatable<JsString>
 
         return Length == other.Length && string.Equals(ToString(), other.ToString(), StringComparison.Ordinal);
     }
-
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is JsString other && Equals(other);
-
-    public override int GetHashCode() => string.GetHashCode(ToString(), StringComparison.Ordinal);
 }

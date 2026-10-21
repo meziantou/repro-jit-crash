@@ -14,10 +14,4 @@ public readonly struct JsEngineScope : IDisposable, IEquatable<JsEngineScope>
 
     /// <inheritdoc/>
     public bool Equals(JsEngineScope other) => ReferenceEquals(_previous, other._previous);
-
-    /// <inheritdoc/>
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is JsEngineScope other && Equals(other);
-
-    /// <inheritdoc/>
-    public override int GetHashCode() => _previous?.GetHashCode() ?? 0;
 }

@@ -44,9 +44,6 @@ public partial class JsObject : JsCell
 
     internal bool IsExotic => (Flags & ObjectFlags.Exotic) != 0;
 
-    /// <summary>Gets a name of the kind of object, for debugging.</summary>
-    internal virtual string ClassName => Class.ToString();
-
     /// <summary>Gets the empty shape of the kind of the object, or null when its named properties are exotic (it uses a property table).</summary>
     private Shape? GetEmptyShape()
     {

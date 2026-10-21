@@ -15,7 +15,4 @@ public sealed class JsSymbol : JsCell
 
     /// <summary>Gets whether the symbol is in the global symbol registry (<c>Symbol.for()</c>): it cannot be held weakly.</summary>
     internal bool IsRegistered { get; }
-
-    /// <summary>Returns <c>Symbol(description)</c> (SymbolDescriptiveString).</summary>
-    public override string ToString() => "Symbol(" + Description + ")";
 }

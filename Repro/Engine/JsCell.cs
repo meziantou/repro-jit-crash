@@ -24,7 +24,6 @@ internal sealed class NumberCell : JsCell
 
 internal sealed class BooleanCell : JsCell
 {
-    public static readonly BooleanCell False = new(value: false);
 
     private BooleanCell(bool value)
         : base(JsValueKind.Boolean)
@@ -33,14 +32,4 @@ internal sealed class BooleanCell : JsCell
     }
 
     public bool Value { get; }
-}
-
-/// <summary>The marker of an uninitialized binding or of an array hole (its kind is <c>undefined</c>).</summary>
-internal sealed class HoleCell : JsCell
-{
-
-    private HoleCell()
-        : base(JsValueKind.Undefined)
-    {
-    }
 }
