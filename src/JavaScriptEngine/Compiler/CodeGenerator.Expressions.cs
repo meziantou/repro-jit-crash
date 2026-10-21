@@ -67,7 +67,6 @@ internal sealed partial class CodeGenerator
                 EmitFunctionExpression(arrow.Function, "");
                 return;
             case ClassExpression classExpression:
-                EmitClass(classExpression.Class, classExpression.Class.Id?.Name ?? "");
                 return;
             case UnaryExpression unary:
                 EmitUnary(unary);
@@ -211,7 +210,6 @@ internal sealed partial class CodeGenerator
                 EmitFunctionExpression(arrow.Function, name);
                 return;
             case ClassExpression { Class.Id: null } classExpression:
-                EmitClass(classExpression.Class, name);
                 return;
             default:
                 EmitExpression(expression);

@@ -501,7 +501,6 @@ internal static partial class IteratorBuiltins
             {
                 var str = value.IsNullOrUndefined ? "" : JsOperations.ToString(value);
                 var separatorLength = first ? 0 : separator.Length;
-                StringOperations.CheckLength((long)result.Length + separatorLength + str.Length);
                 if (!first)
                 {
                     result.Append(separator);

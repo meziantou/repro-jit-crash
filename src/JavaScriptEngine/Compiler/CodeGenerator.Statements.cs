@@ -269,7 +269,6 @@ internal sealed partial class CodeGenerator
                 EmitFunctionDeclarationStatement(declaration);
                 return;
             case ClassDeclaration declaration:
-                EmitClass(declaration.Class, declaration.Class.Id!.Name);
                 EmitInitializeIdentifier(declaration.Class.Id);
                 return;
             case BlockStatement block:
@@ -1049,7 +1048,6 @@ internal sealed partial class CodeGenerator
             case FunctionDeclaration:
                 return;
             case ClassDeclaration classDeclaration:
-                EmitClass(classDeclaration.Class, classDeclaration.Class.Id?.Name ?? "default");
                 if (classDeclaration.Class.Id is not null)
                 {
                     EmitInitializeIdentifier(classDeclaration.Class.Id);

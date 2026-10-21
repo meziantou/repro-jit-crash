@@ -523,7 +523,6 @@ public partial class JsObject : JsCell
         return this switch
         {
             JsArray => Shape.EmptyArray,
-            JsStringObject or Interpreter.JsArgumentsObject => Shape.EmptyIndexedExotic,
             _ => null,
         };
     }

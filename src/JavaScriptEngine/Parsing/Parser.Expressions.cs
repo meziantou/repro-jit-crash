@@ -724,7 +724,6 @@ internal sealed partial class Parser
 
             case TokenKind.Slash:
             case TokenKind.SlashEqual:
-                return ParseRegularExpressionLiteral();
             case TokenKind.LeftParen:
             {
                 var canBeArrow = _potentialArrowAt == start;

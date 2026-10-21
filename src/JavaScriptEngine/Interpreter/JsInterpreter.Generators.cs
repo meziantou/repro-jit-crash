@@ -205,7 +205,6 @@ internal static partial class JsInterpreter
                 return ThrowHelper.ThrowTypeError<IteratorRecord>($"{JsOperations.DescribeForError(value)} is not async iterable");
 
             var syncRecord = IteratorOperations.GetIteratorFromMethod(value, syncMethod);
-            return AsyncFromSyncIterator.Create(realm, syncRecord);
         }
 
         return IteratorOperations.GetIteratorFromMethod(value, method);

@@ -35,7 +35,6 @@ public partial class JsObject
             var ordinary = this switch
             {
                 JsArray => !key.Equals(LengthKeyForCache),
-                JsStringObject or Interpreter.JsArgumentsObject => true,
                 _ => false,
             };
 

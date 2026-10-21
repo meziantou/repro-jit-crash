@@ -15,7 +15,6 @@ internal sealed class JsErrorObject(JsObject? prototype) : JsObject(prototype, O
     public void CaptureStackTrace(JsEngine? engine)
     {
         var builder = new StringBuilder();
-        builder.Append(ErrorFormatting.GetDescription(new JsValue(this)));
         if (engine is not null)
         {
             var frames = engine.Frames;

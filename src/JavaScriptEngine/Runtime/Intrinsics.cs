@@ -30,7 +30,6 @@ internal sealed partial class Intrinsics
 
         BooleanPrototype = new JsPrimitiveObject(ObjectPrototype, ObjectClass.Boolean, JsValue.False);
         NumberPrototype = new JsPrimitiveObject(ObjectPrototype, ObjectClass.Number, 0);
-        StringPrototype = new JsStringObject(ObjectPrototype, JsString.Empty);
         SymbolPrototype = new JsObject(ObjectPrototype);
         BigIntPrototype = new JsObject(ObjectPrototype);
         ArrayPrototype = new JsArray(ObjectPrototype);
@@ -213,7 +212,6 @@ internal sealed partial class Intrinsics
         {
             JsValueKind.Boolean => new JsPrimitiveObject(BooleanPrototype, ObjectClass.Boolean, value),
             JsValueKind.Number => new JsPrimitiveObject(NumberPrototype, ObjectClass.Number, value),
-            JsValueKind.String => new JsStringObject(StringPrototype, value.AsJsString()),
             JsValueKind.Symbol => new JsPrimitiveObject(SymbolPrototype, ObjectClass.Symbol, value),
             JsValueKind.BigInt => new JsPrimitiveObject(BigIntPrototype, ObjectClass.BigInt, value),
             _ => throw new ArgumentOutOfRangeException(nameof(value), value.Kind, "Not a primitive value"),

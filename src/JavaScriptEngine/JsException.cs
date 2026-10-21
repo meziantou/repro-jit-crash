@@ -22,7 +22,6 @@ public sealed class JsException : Exception
 
     /// <summary>Initializes a new instance of the <see cref="JsException"/> class with the thrown value.</summary>
     public JsException(JsValue value)
-        : this(value, JsEngine.Current?.GetCurrentLocation())
     {
     }
 
@@ -31,7 +30,6 @@ public sealed class JsException : Exception
     /// that threw it (e.g. the position of a syntax error).
     /// </summary>
     public JsException(JsValue value, JsSourceLocation? location)
-        : base(ErrorFormatting.GetDescription(value))
     {
         Value = value;
         Location = location;

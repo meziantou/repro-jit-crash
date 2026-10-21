@@ -1102,7 +1102,6 @@ internal sealed class RegExpRunner
     private void CheckBudget()
     {
         _budget = StepsBetweenBudgetChecks;
-        _engine?.CheckRegExpBudget(_matchStart);
     }
 
     private static void ThrowStackOverflow()

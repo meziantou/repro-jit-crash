@@ -93,6 +93,5 @@ internal sealed partial class Intrinsics
             _typedArrayPrototypes[(int)type] = new JsObject(_typedArrayPrototype);
         }
 
-        _typedArray = TypedArrayBuiltins.Initialize(this, _typedArrayConstructors);
     }
 }

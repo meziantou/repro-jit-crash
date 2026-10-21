@@ -75,7 +75,7 @@ step by step, keeping a step only when the crash still happened in 4/4 runs:
   `try`/`catch`, the strict mode, the metadata, the result handling and the `using`/`Dispose` of the engine are not.
 - `JsRealm` no longer installs the built-ins (`Intrinsics.Initialize()` and `DefineGlobalBindings` are not called): a
   realm without globals is enough. The unreferenced built-ins, `Intl` and `Temporal` were deleted (138k lines of
-  engine source down to about 46k); only 4 files remain in `Builtins/` (iterators, JSON, RegExp, typed arrays) because the runtime uses them.
+  engine source down to about 40k, 264 files); only 4 files remain in `Builtins/` (iterators, JSON, RegExp, typed arrays) because the runtime uses them.
 - The `Meziantou.Framework.Language` and `Meziantou.Framework.Language.Regex` projects are not needed (they are only
   used to parse regular expression patterns, which are stubbed), and `Meziantou.Framework.Unicode` is replaced by a stub
   of one file (`src/Unicode/Shim.cs`). The embedded data tables (time zones, CLDR) are not needed either.
