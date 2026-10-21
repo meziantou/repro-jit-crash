@@ -115,7 +115,7 @@ internal sealed class Frame
         arguments.CopyTo(Values.AsSpan(code.RegisterCount));
     }
 
-    public JsValue[] Values { get; internal set; }
+    public JsValue[] Values;
 }
 
 public readonly struct JsValue
