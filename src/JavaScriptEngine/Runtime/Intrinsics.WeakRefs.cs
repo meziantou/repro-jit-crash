@@ -31,9 +31,7 @@ internal sealed partial class Intrinsics
         {
             _isWeakRefsInitializing = true;
             _weakRefPrototype = new JsObject(ObjectPrototype);
-            _weakRef = WeakRefBuiltins.Initialize(this, _weakRefPrototype);
             _finalizationRegistryPrototype = new JsObject(ObjectPrototype);
-            _finalizationRegistry = FinalizationRegistryBuiltins.Initialize(this, _finalizationRegistryPrototype);
         }
 
         return this;

@@ -56,14 +56,10 @@ internal sealed partial class Intrinsics
             _isCollectionsInitializing = true;
             _mapPrototype = new JsObject(ObjectPrototype);
             _mapIteratorPrototype = new JsObject(IteratorPrototype);
-            _map = MapBuiltins.Initialize(this, _mapPrototype, _mapIteratorPrototype);
             _setPrototype = new JsObject(ObjectPrototype);
             _setIteratorPrototype = new JsObject(IteratorPrototype);
-            _set = SetBuiltins.Initialize(this, _setPrototype, _setIteratorPrototype);
             _weakMapPrototype = new JsObject(ObjectPrototype);
-            _weakMap = WeakMapBuiltins.Initialize(this, _weakMapPrototype);
             _weakSetPrototype = new JsObject(ObjectPrototype);
-            _weakSet = WeakSetBuiltins.Initialize(this, _weakSetPrototype);
         }
 
         return this;

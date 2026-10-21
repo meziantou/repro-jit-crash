@@ -66,7 +66,6 @@ internal static class BigIntOperations
     /// <summary>NumberToBigInt(number): a RangeError when the number is not an integer.</summary>
     public static BigInteger NumberToBigInt(double number)
     {
-        if (!NumberBuiltins.IsIntegralNumber(number))
             return ThrowHelper.ThrowRangeError<BigInteger>($"The number {NumberFormatting.ToString(number)} cannot be converted to a BigInt because it is not an integer");
 
         return new BigInteger(number);

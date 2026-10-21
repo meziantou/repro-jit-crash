@@ -7,5 +7,4 @@ internal sealed partial class Intrinsics
     /// <summary>%Math%</summary>
     public JsObject MathObject => _math!;
 
-    partial void InitializeMath() => _math = MathBuiltins.Initialize(this);
 }

@@ -23,7 +23,6 @@ internal sealed partial class Intrinsics
         {
             _isDateInitializing = true;
             _datePrototype = new JsObject(ObjectPrototype);
-            _date = DateBuiltins.Initialize(this);
 
             // The ECMA-402 amendments (toLocaleString, toLocaleDateString, toLocaleTimeString)
         }

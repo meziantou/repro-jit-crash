@@ -44,9 +44,7 @@ internal sealed partial class Intrinsics
         {
             _isDisposableStacksInitializing = true;
             _disposableStackPrototype = new JsObject(ObjectPrototype);
-            _disposableStack = DisposableStackBuiltins.Initialize(this, _disposableStackPrototype);
             _asyncDisposableStackPrototype = new JsObject(ObjectPrototype);
-            _asyncDisposableStack = AsyncDisposableStackBuiltins.Initialize(this, _asyncDisposableStackPrototype);
         }
 
         return this;

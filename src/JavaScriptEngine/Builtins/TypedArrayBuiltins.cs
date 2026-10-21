@@ -68,7 +68,6 @@ internal static class TypedArrayBuiltins
             constructors[(int)type] = CreateConstructor(intrinsics, constructor, type);
         }
 
-        Uint8ArrayBase64Builtins.Initialize(intrinsics);
         return constructor;
     }
 

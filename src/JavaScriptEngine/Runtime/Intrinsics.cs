@@ -79,7 +79,6 @@ internal sealed partial class Intrinsics
     public void Initialize()
     {
         ThrowTypeError = CreateThrowTypeError();
-        ErrorBuiltins.Initialize(this, _errorPrototypes, _errorConstructors);
         InitializeBuiltins();
     }
 
