@@ -10,8 +10,8 @@ public sealed partial class JsRealm
         engine.CurrentRealm = this;
         try
         {
-            Intrinsics = new Intrinsics(this);
-            GlobalObject = new JsObject(Intrinsics.ObjectPrototype);
+            Intrinsics = null!;
+            GlobalObject = new JsObject(prototype: null);
             GlobalThis = new JsValue(GlobalObject);
             GlobalEnvironment = new Interpreter.GlobalEnvironment(this);
         }
