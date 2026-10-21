@@ -129,14 +129,10 @@ internal sealed class Frame
 
 public readonly struct JsValue
 {
-    internal JsCell? Cell { get; }
+    internal object? Cell { get; }
 
-    internal JsValue(JsCell? cell)
+    internal JsValue(object? cell)
     {
     }
-}
-
-public abstract class JsCell
-{
 }
 
