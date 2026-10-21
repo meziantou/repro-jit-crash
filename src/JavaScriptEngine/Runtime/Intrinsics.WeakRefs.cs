@@ -22,10 +22,7 @@ internal sealed partial class Intrinsics
     public JsObject FinalizationRegistryPrototype => EnsureWeakRefs()._finalizationRegistryPrototype!;
 
     partial void InitializeWeakRefs()
-    {
-        AddLazyGlobal("WeakRef", static intrinsics => intrinsics.WeakRef);
-        AddLazyGlobal("FinalizationRegistry", static intrinsics => intrinsics.FinalizationRegistry);
-    }
+    {}
 
     /// <summary>Creates the WeakRef and FinalizationRegistry built-ins, if they are not created yet.</summary>
     private Intrinsics EnsureWeakRefs()

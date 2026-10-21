@@ -46,12 +46,7 @@ internal sealed partial class Intrinsics
     public JsObject WeakSetPrototype => EnsureCollections()._weakSetPrototype!;
 
     partial void InitializeCollections()
-    {
-        AddLazyGlobal("Map", static intrinsics => intrinsics.Map);
-        AddLazyGlobal("Set", static intrinsics => intrinsics.Set);
-        AddLazyGlobal("WeakMap", static intrinsics => intrinsics.WeakMap);
-        AddLazyGlobal("WeakSet", static intrinsics => intrinsics.WeakSet);
-    }
+    {}
 
     /// <summary>Creates the collection built-ins, if they are not created yet.</summary>
     private Intrinsics EnsureCollections()

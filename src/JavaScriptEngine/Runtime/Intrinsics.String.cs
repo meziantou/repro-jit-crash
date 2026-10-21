@@ -9,8 +9,5 @@ internal sealed partial class Intrinsics
     public JsObject StringIteratorPrototype { get; private set; } = null!;
 
     partial void InitializeString()
-    {
-        StringIteratorPrototype = new JsObject(IteratorPrototype);
-        StringConstructor = StringBuiltins.Initialize(this);
-    }
+    {}
 }

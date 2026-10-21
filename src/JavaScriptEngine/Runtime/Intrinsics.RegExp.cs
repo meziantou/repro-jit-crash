@@ -29,10 +29,7 @@ internal sealed partial class Intrinsics
     public RegExpLegacyStaticProperties RegExpLegacyStatics { get; } = new();
 
     partial void InitializeRegExp()
-    {
-        AddLazyGlobal("RegExp", static intrinsics => intrinsics.RegExp);
-        StringRegExpBuiltins.Initialize(this);
-    }
+    {}
 
     /// <summary>Creates the RegExp built-ins, if they are not created yet.</summary>
     private Intrinsics EnsureRegExp()

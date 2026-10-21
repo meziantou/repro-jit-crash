@@ -32,14 +32,7 @@ internal sealed partial class Intrinsics
     /// InitializeArray and InitializePromise. DisposableStack and AsyncDisposableStack are created on first use.
     /// </summary>
     partial void InitializeDisposable()
-    {
-        SuppressedErrorPrototype = new JsObject(GetErrorPrototype(ErrorType.Error));
-        SuppressedError = SuppressedErrorBuiltins.Initialize(this, SuppressedErrorPrototype);
-        AddLazyGlobal("DisposableStack", static intrinsics => intrinsics.DisposableStack);
-        AddLazyGlobal("AsyncDisposableStack", static intrinsics => intrinsics.AsyncDisposableStack);
-        AsyncIteratorDisposeBuiltins.Initialize(this);
-        InitializeEs2026Additions();
-    }
+    {}
 
     /// <summary>The ES2026 methods added to the earlier built-ins (Error.isError, Array.fromAsync).</summary>
     partial void InitializeEs2026Additions();

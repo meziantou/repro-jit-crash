@@ -12,9 +12,5 @@ internal sealed partial class Intrinsics
     public JsObject WrapForValidIteratorPrototype { get; private set; } = null!;
 
     partial void InitializeIterator()
-    {
-        IteratorHelperPrototype = new JsObject(IteratorPrototype);
-        WrapForValidIteratorPrototype = new JsObject(IteratorPrototype);
-        IteratorConstructor = IteratorBuiltins.Initialize(this);
-    }
+    {}
 }

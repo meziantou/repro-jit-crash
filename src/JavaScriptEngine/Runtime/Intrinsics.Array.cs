@@ -27,11 +27,7 @@ internal sealed partial class Intrinsics
     private bool _arrayIteratorNextInTable;
 
     partial void InitializeArray()
-    {
-        ArrayIteratorPrototype = new JsObject(IteratorPrototype);
-        (ArrayConstructor, ArrayPrototypeValues, ArrayPrototypeToString) = ArrayBuiltins.Initialize(this);
-        ArrayIteratorNext = ArrayIteratorPrototype.Get(new PropertyKey("next"));
-    }
+    {}
 
     /// <summary>
     /// Gets whether the iteration of the arrays of the realm is not observable: %Array.prototype%[%Symbol.iterator%] is

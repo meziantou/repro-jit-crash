@@ -55,18 +55,7 @@ internal sealed partial class Intrinsics
     // The global properties are lazy, in the order of the built-ins (the built-ins also add them with AddGlobal when they
     // are created, which is ignored once the global bindings are defined)
     partial void InitializeBinaryData()
-    {
-        AddLazyGlobal("ArrayBuffer", static intrinsics => intrinsics.ArrayBuffer);
-        SharedArrayBufferPrototype = new JsObject(ObjectPrototype);
-        SharedArrayBuffer = ArrayBufferBuiltins.InitializeShared(this);
-        AddLazyGlobal("DataView", static intrinsics => intrinsics.DataView);
-        foreach (var type in Enum.GetValues<TypedArrayElementType>())
-        {
-            AddLazyGlobal(BinaryDataOperations.GetTypedArrayName(type), TypedArrayConstructorFactories[(int)type]);
-        }
-
-        AddLazyGlobal("Atomics", static intrinsics => intrinsics.Atomics);
-    }
+    {}
 
     private static readonly Func<Intrinsics, JsValue>[] TypedArrayConstructorFactories = CreateTypedArrayConstructorFactories();
 

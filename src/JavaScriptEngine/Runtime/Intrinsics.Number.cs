@@ -16,10 +16,5 @@ internal sealed partial class Intrinsics
     public JsFunction ParseFloat => _parseFloat!;
 
     partial void InitializeNumber()
-    {
-        // parseInt and parseFloat are the same function objects as Number.parseInt and Number.parseFloat
-        _parseInt = GlobalFunctionsBuiltins.CreateParseInt(Realm);
-        _parseFloat = GlobalFunctionsBuiltins.CreateParseFloat(Realm);
-        _number = NumberBuiltins.Initialize(this);
-    }
+    {}
 }

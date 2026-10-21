@@ -12,9 +12,5 @@ internal sealed partial class Intrinsics
     public JsFunction PromisePrototypeThen { get; private set; } = null!;
 
     partial void InitializePromise()
-    {
-        PromisePrototype = new JsObject(ObjectPrototype);
-        Promise = PromiseBuiltins.Initialize(this, PromisePrototype, out var then);
-        PromisePrototypeThen = then;
-    }
+    {}
 }
