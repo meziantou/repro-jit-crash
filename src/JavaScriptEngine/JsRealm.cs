@@ -61,24 +61,23 @@ public sealed partial class JsRealm
 
     private Compiler.FunctionTemplate Compile(Text.SourceText source)
     {
-        var previousRealm = Engine.CurrentRealm;
-        Engine.CurrentRealm = this;
-        try
+        return new Compiler.FunctionTemplate
         {
-            try
-            {
-                var program = Parsing.JsParser.ParseScript(source, Parsing.ParserOptions.Script);
-                return Compiler.CodeGenerator.CompileProgram(program, source, Compiler.ProgramKind.Script, isStrict: false);
-            }
-            catch (JsSyntaxErrorException ex)
-            {
-                throw ThrowHelper.CreateSyntaxErrorException(ex);
-            }
-        }
-        finally
-        {
-            Engine.CurrentRealm = previousRealm;
-        }
+            Name = "",
+            Length = 0,
+            Flags = default,
+            Code = [],
+            Constants = [],
+            Keys = [],
+            Objects = [],
+            RegisterCount = 1,
+            MaxStack = 1,
+            Handlers = [],
+            Positions = [],
+            Source = source,
+            SourceStart = 0,
+            SourceEnd = 0,
+        };
     }
 
     /// <summary>Creates a native error object of this realm.</summary>
