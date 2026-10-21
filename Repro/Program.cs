@@ -92,7 +92,7 @@ public sealed class JsRealm(JsEngine engine)
 internal sealed class FunctionTemplate
 {
     public required int[] Code { get; init; }
-    public required JsValue[] Constants { get; init; }
+    public required int[] Constants { get; init; }
     public required int[] Keys { get; init; }
     public required int[] Objects { get; init; }
     public required int[] Handlers { get; init; }
