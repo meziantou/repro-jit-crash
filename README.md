@@ -74,11 +74,11 @@ step by step, keeping a step only when the crash still happened in 4/4 runs:
   the cancellation token, the engine options, the module loader, the agents (threads), the host objects, the
   `try`/`catch`, the strict mode, the metadata, the result handling and the `using`/`Dispose` of the engine are not.
 - `JsRealm` no longer installs the built-ins (`Intrinsics.Initialize()` and `DefineGlobalBindings` are not called): a
-  realm without globals is enough. The built-in sources are still compiled; deleting them needs hand-fixing the
-  `Intrinsics.*` partial files and the helpers the runtime shares with `Builtins/` (an automatic line-based deletion
-  left broken statements).
-- In the engine, `JsRealm.Execute` still has to parse and compile the script and to create the interpreter frame, but
-  the interpreter does not have to run it (`JsRealm.Run` returns `default` instead).
+  realm without globals is enough. The unreferenced built-ins, `Intl` and `Temporal` were deleted (138k lines of
+  engine source down to about 52k); the rest of `Builtins/` is still compiled because the runtime shares helpers with it.
+- The `Meziantou.Framework.Language` and `Meziantou.Framework.Language.Regex` projects are not needed (they are only
+  used to parse regular expression patterns, which are stubbed), and `Meziantou.Framework.Unicode` is replaced by a stub
+  of one file (`src/Unicode/Shim.cs`). The embedded data tables (time zones, CLDR) are not needed either.
 
 What still matters (removing any of these makes the crash disappear):
 
@@ -97,6 +97,7 @@ have the release JIT.
 | Path | Description |
 | --- | --- |
 | `Repro/Program.cs` | The repro |
-| `src/` | The projects the engine needs (JavaScript engine, regex syntax tree, Unicode data), copied from Meziantou.Framework |
+| `src/JavaScriptEngine/` | The JavaScript engine, copied from Meziantou.Framework and trimmed |
+| `src/Unicode/` | A stub of the Unicode package that the engine references |
 
 The code of Meziantou.Framework is under the MIT license (`LICENSE.txt`).
