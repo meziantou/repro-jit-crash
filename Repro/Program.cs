@@ -110,7 +110,7 @@ internal sealed class FunctionTemplate
     public required int[] Code { get; init; }
     public required JsValue[] Constants { get; init; }
     public required int[] Keys { get; init; }
-    public required object[] Objects { get; init; }
+    public required int[] Objects { get; init; }
     public required int[] Handlers { get; init; }
     public required int[] Positions { get; init; }
     public required int SourceStart { get; init; }
