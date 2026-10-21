@@ -60,9 +60,6 @@ internal readonly struct PropertyKey : IEquatable<PropertyKey>
     /// <summary>Creates a key from its <see cref="RawValue"/> and its <see cref="RawIndex"/>.</summary>
     public static PropertyKey FromRaw(object? value, uint index) => new(value, index);
 
-    /// <summary>Creates the key of a property whose name is a non-negative integer (an index when it is less than 2^32-1).</summary>
-    public static PropertyKey FromInteger(long value) => value is >= 0 and < NotAnIndex ? new PropertyKey((uint)value) : new PropertyKey(value.ToString(CultureInfo.InvariantCulture));
-
     public static PropertyKey FromDouble(double value)
     {
         if (value >= 0 && value < NotAnIndex && value == Math.Floor(value) && !(value == 0 && double.IsNegative(value)))
@@ -81,15 +78,10 @@ internal readonly struct PropertyKey : IEquatable<PropertyKey>
 
     public bool IsSymbol => _value is JsSymbol;
 
-    public bool IsString => _value is not JsSymbol;
-
     public JsSymbol AsSymbol() => (JsSymbol)_value!;
 
     /// <summary>Gets the string of a string key (an index is formatted).</summary>
     public string AsString() => _value as string ?? _index.ToString(CultureInfo.InvariantCulture);
-
-    /// <summary>Gets the key as a JavaScript value (a string or a symbol).</summary>
-    public JsValue ToJsValue() => _value is JsSymbol symbol ? new JsValue(symbol) : JsValue.FromString(AsString());
 
     public bool Equals(PropertyKey other)
     {
@@ -125,13 +117,7 @@ internal readonly struct PropertyKey : IEquatable<PropertyKey>
         return _value is string value ? string.GetHashCode(value, StringComparison.Ordinal) : RuntimeHelpers.GetHashCode(_value!);
     }
 
-    public static bool operator ==(PropertyKey left, PropertyKey right) => left.Equals(right);
-
-    public static bool operator !=(PropertyKey left, PropertyKey right) => !left.Equals(right);
-
     public static implicit operator PropertyKey(string value) => new(value);
-
-    public static implicit operator PropertyKey(JsSymbol value) => new(value);
 
     public override string ToString() => _value is JsSymbol symbol ? symbol.ToString() : AsString();
 

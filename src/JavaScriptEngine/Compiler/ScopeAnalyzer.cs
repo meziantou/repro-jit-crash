@@ -541,12 +541,6 @@ internal sealed partial class ScopeAnalyzer
     private readonly Dictionary<PropertyDefinition, Variable> _computedFieldKeys = [];
     private readonly Dictionary<(ClassNode Class, bool Static), FunctionInfo> _classInitializers = [];
 
-    /// <summary>Gets the hidden binding that holds the computed key of a field.</summary>
-    public Variable GetComputedFieldKey(PropertyDefinition property) => _computedFieldKeys[property];
-
-    /// <summary>Gets the synthetic initializer of the instance fields (static: false) or of the static elements (static: true).</summary>
-    public FunctionInfo? GetClassInitializer(ClassNode node, bool isStatic) => _classInitializers.GetValueOrDefault((node, isStatic));
-
     private FunctionInfo CreateClassInitializer(ClassNode node, Scope classScope, FunctionInfoKind kind)
     {
         var info = new FunctionInfo(classScope.Function, node, kind, isStrict: true);

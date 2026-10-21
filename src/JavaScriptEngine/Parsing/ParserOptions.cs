@@ -5,8 +5,6 @@ internal sealed class ParserOptions
 {
     public static ParserOptions Script { get; } = new();
 
-    public static ParserOptions Module { get; } = new() { IsModule = true };
-
     /// <summary>Gets whether the goal symbol is <c>Module</c> (strict, <c>await</c> is reserved, top-level await, import/export).</summary>
     public bool IsModule { get; init; }
 
@@ -30,11 +28,4 @@ internal sealed class ParserOptions
 
     /// <summary>Gets the private names of the classes that enclose the code of a direct eval (they can be referenced).</summary>
     public IReadOnlyCollection<string>? PrivateNames { get; init; }
-
-    /// <summary>
-    /// Gets whether the syntax of the Annex B is enabled (HTML-like comments, legacy octal literals and escapes in sloppy
-    /// code, labelled function declarations, function declarations in if statements, RegExp extensions...). It is always
-    /// enabled, as in the web browsers.
-    /// </summary>
-    public bool AnnexB { get; init; } = true;
 }

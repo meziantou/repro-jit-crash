@@ -36,55 +36,6 @@ internal sealed partial class CodeGenerator
         return generator.CompileProgramBody(program, kind);
     }
 
-    /// <summary>Compiles the function of a dynamic function (the Function constructor): its scope is the global scope.</summary>
-    public static FunctionTemplate CompileDynamicFunction(FunctionNode function, SourceText source)
-    {
-        var program = new Program
-        {
-            Start = function.Start,
-            End = function.End,
-            Body = [new ExpressionStatement { Start = function.Start, End = function.End, Expression = new FunctionExpression { Start = function.Start, End = function.End, Function = function } }],
-        };
-
-        var analysis = ScopeAnalyzer.Analyze(program, ProgramKind.Script, isStrict: false);
-        var info = analysis.Functions[function];
-        var generator = new CodeGenerator(analysis, source, info);
-        return generator.CompileFunctionBody(function, "anonymous", FunctionTemplateFlags.None);
-    }
-
-    /// <summary>
-    /// Compiles a module: the instantiation of its function declarations (run by InitializeEnvironment, before any module
-    /// of the graph is evaluated) and its body. Both run in the module environment.
-    /// </summary>
-    public static CompiledModule CompileModule(Program program, SourceText source)
-    {
-        var analysis = ScopeAnalyzer.Analyze(program, ProgramKind.Module, isStrict: true);
-        var scope = analysis.Root.Scope;
-        var initialization = new CodeGenerator(analysis, source, analysis.Root);
-        initialization.EmitFunctionDeclarations(program.Body, scope, isGlobal: false);
-        initialization._builder.Emit(OpCode.PushUndefined);
-        initialization._builder.Emit(OpCode.Return);
-        var initializationTemplate = initialization.Build(string.Empty, length: 0, FunctionTemplateFlags.ModuleCode | FunctionTemplateFlags.Strict, program.Start, program.End, nameScope: null);
-
-        var body = new CodeGenerator(analysis, source, analysis.Root);
-        body.EmitWithDisposal(scope, () => body.EmitStatements(program.Body));
-        if (!body._builder.IsUnreachable)
-        {
-            body._builder.Emit(OpCode.PushUndefined);
-            body._builder.Emit(OpCode.Return);
-        }
-
-        var flags = FunctionTemplateFlags.ModuleCode | FunctionTemplateFlags.Strict;
-        var hasTopLevelAwait = body._builder.ContainsAwait;
-        if (hasTopLevelAwait)
-        {
-            flags |= FunctionTemplateFlags.Async;
-        }
-
-        var bodyTemplate = body.Build(string.Empty, length: 0, flags, program.Start, program.End, nameScope: null);
-        return new CompiledModule(initializationTemplate, bodyTemplate, scope.Info ?? new ScopeInfo(ScopeKind.Module, [], [], isVarScope: true), hasTopLevelAwait);
-    }
-
     private FunctionTemplate CompileProgramBody(Program program, ProgramKind kind)
     {
         var scope = _function.Scope;

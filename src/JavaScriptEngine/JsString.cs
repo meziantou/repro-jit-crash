@@ -10,11 +10,6 @@ namespace Meziantou.Framework.JavaScriptEngine;
 [DebuggerDisplay("{ToString()}")]
 internal sealed class JsString : JsCell, IEquatable<JsString>
 {
-    /// <summary>The maximum length of a string (the maximum length of a .NET string).</summary>
-    public const int MaxLength = 0x3FFFFFDF;
-
-    // Concatenations shorter than this are flattened immediately
-    private const int MinRopeLength = 64;
 
     private static readonly JsString[] SingleCharacters = CreateSingleCharacters();
 
@@ -41,10 +36,6 @@ internal sealed class JsString : JsCell, IEquatable<JsString>
 
     public int Length { get; }
 
-    public bool IsEmpty => Length == 0;
-
-    public char this[int index] => ToString()[index];
-
     public static JsString Create(string value)
     {
         if (value.Length == 0)
@@ -55,29 +46,6 @@ internal sealed class JsString : JsCell, IEquatable<JsString>
 
         return new JsString(value);
     }
-
-    public static JsString Create(char value) => value < SingleCharacters.Length ? SingleCharacters[value] : new JsString(value.ToString());
-
-    /// <summary>Concatenates two strings (a RangeError is thrown by the caller when the result is too long: see <see cref="CanConcat"/>).</summary>
-    public static JsString Concat(JsString left, JsString right)
-    {
-        if (left.Length == 0)
-            return right;
-
-        if (right.Length == 0)
-            return left;
-
-        var length = (long)left.Length + right.Length;
-        if (length > MaxLength)
-            throw new InvalidOperationException("The string is too long");
-
-        if (length < MinRopeLength)
-            return new JsString(string.Concat(left.ToString(), right.ToString()));
-
-        return new JsString(left, right);
-    }
-
-    public static bool CanConcat(JsString left, JsString right) => (long)left.Length + right.Length <= MaxLength;
 
     public override string ToString()
     {

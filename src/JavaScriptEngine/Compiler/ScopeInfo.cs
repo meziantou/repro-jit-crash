@@ -17,15 +17,4 @@ internal sealed class ScopeInfo(ScopeKind kind, string?[] names, ScopeSlotFlags[
 
     /// <summary>Gets whether the environment is the parameter scope of a function whose parameters have expressions, used as the variable environment of the eval code of the parameters: the vars of the eval code cannot redeclare its bindings.</summary>
     public bool IsParameterVarScope { get; } = isParameterVarScope;
-
-    public int IndexOf(string name)
-    {
-        for (var i = 0; i < Names.Length; i++)
-        {
-            if (string.Equals(Names[i], name, StringComparison.Ordinal))
-                return i;
-        }
-
-        return -1;
-    }
 }

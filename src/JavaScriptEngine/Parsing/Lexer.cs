@@ -84,12 +84,6 @@ internal sealed class Lexer
     /// <summary>Gets or sets whether the code is strict mode code (legacy octal literals and escapes are errors).</summary>
     public bool Strict { get; set; }
 
-    public SourceText Source => _source;
-
-    public string Text => _text;
-
-    public int Position => _pos;
-
     public string Intern(ReadOnlySpan<char> name)
     {
         if (_namesLookup.TryGetValue(name, out var result))
@@ -302,77 +296,6 @@ internal sealed class Lexer
                 Raise(_pos, "Invalid or unexpected token");
                 return token;
         }
-    }
-
-    /// <summary>Scans a regular expression literal that starts at the '/' of <paramref name="token"/>.</summary>
-    public Token RescanRegularExpression(in Token token)
-    {
-        var text = _text;
-        var start = token.Start;
-        var pos = start + 1;
-        var inClass = false;
-        while (true)
-        {
-            if (pos >= text.Length || IsLineTerminator(text[pos]))
-                Raise(start, "Invalid regular expression: missing /");
-
-            var c = text[pos++];
-            if (c == '\\')
-            {
-                if (pos >= text.Length || IsLineTerminator(text[pos]))
-                    Raise(start, "Invalid regular expression: missing /");
-
-                pos++;
-            }
-            else if (c == '[')
-            {
-                inClass = true;
-            }
-            else if (c == ']')
-            {
-                inClass = false;
-            }
-            else if (c == '/' && !inClass)
-            {
-                break;
-            }
-        }
-
-        var patternEnd = pos - 1;
-        var flagsStart = pos;
-        while (pos < text.Length)
-        {
-            var c = text[pos];
-            if (c < 128)
-            {
-                if (c == '\\')
-                    Raise(pos, "Invalid regular expression flags");
-
-                if ((AsciiIdentifierFlags[c] & 2) == 0)
-                    break;
-
-                pos++;
-            }
-            else
-            {
-                var cp = CodePointAt(pos);
-                if (!IsIdentifierPartCodePoint(cp))
-                    break;
-
-                pos += cp > 0xFFFF ? 2 : 1;
-            }
-        }
-
-        _pos = pos;
-        return new Token
-        {
-            Kind = TokenKind.RegularExpression,
-            Flags = token.Flags & TokenFlags.NewLineBefore,
-            Start = start,
-            End = pos,
-            Value = text.Substring(start + 1, patternEnd - start - 1),
-            Raw = text[flagsStart..pos],
-        };
     }
 
     /// <summary>Scans the template part that follows the '}' of <paramref name="token"/> (the end of a substitution).</summary>

@@ -29,8 +29,6 @@ internal sealed class SourceText
 
     public int Length => Text.Length;
 
-    public char this[int index] => Text[index];
-
     /// <summary>Gets the 1-based line and column of an offset, in the document of the source (with the offsets applied).</summary>
     public (int Line, int Column) GetLineAndColumn(int offset)
     {

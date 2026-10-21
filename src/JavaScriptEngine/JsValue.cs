@@ -32,12 +32,6 @@ public readonly struct JsValue : IEquatable<JsValue>
     /// <summary>Gets the <c>undefined</c> value.</summary>
     public static JsValue Undefined => default;
 
-    /// <summary>Gets the <c>null</c> value.</summary>
-    public static JsValue Null { get; } = new(NullCell.Instance);
-
-    /// <summary>Gets the <c>true</c> value.</summary>
-    public static JsValue True { get; } = new(BooleanCell.True);
-
     /// <summary>Gets the <c>false</c> value.</summary>
     public static JsValue False { get; } = new(BooleanCell.False);
 
@@ -51,18 +45,6 @@ public readonly struct JsValue : IEquatable<JsValue>
         get => Cell is null ? JsValueKind.Undefined : Cell.Kind;
     }
 
-    /// <summary>Gets whether the value is <c>undefined</c>.</summary>
-    public bool IsUndefined => Cell is null;
-
-    /// <summary>Gets whether the value is <c>null</c>.</summary>
-    public bool IsNull => ReferenceEquals(Cell, NullCell.Instance);
-
-    /// <summary>Gets whether the value is <c>undefined</c> or <c>null</c>.</summary>
-    public bool IsNullOrUndefined => Cell is null || ReferenceEquals(Cell, NullCell.Instance);
-
-    /// <summary>Gets whether the value is a boolean.</summary>
-    public bool IsBoolean => Cell is BooleanCell;
-
     /// <summary>Gets whether the value is a number.</summary>
     public bool IsNumber
     {
@@ -72,18 +54,6 @@ public readonly struct JsValue : IEquatable<JsValue>
 
     /// <summary>Gets whether the value is a string.</summary>
     public bool IsString => Cell is JsString;
-
-    /// <summary>Gets whether the value is a symbol.</summary>
-    public bool IsSymbol => Cell is JsSymbol;
-
-    /// <summary>Gets whether the value is a BigInt.</summary>
-    public bool IsBigInt => Cell is JsBigInt;
-
-    /// <summary>Gets whether the value is an object.</summary>
-    public bool IsObject => Cell is JsObject;
-
-    /// <summary>Gets whether the value is a function (an object with a [[Call]] internal method).</summary>
-    public bool IsCallable => Cell is JsObject obj && obj.IsCallable;
 
     internal bool IsHole => ReferenceEquals(Cell, HoleCell.Instance);
 
@@ -96,49 +66,6 @@ public readonly struct JsValue : IEquatable<JsValue>
 
     /// <summary>Gets the number of a value that is known to be a number (no check).</summary>
     internal double NumberValue => _number;
-
-    /// <summary>
-    /// Stores a value in a slot of the interpreter (a register, the stack). When the slot already has the same cell (the
-    /// numbers: they share <see cref="NumberCell.Instance"/>), only the number is written: storing a reference into a heap
-    /// object calls the write barrier of the GC, the main cost of the loops on numbers.
-    /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static void Store(ref JsValue slot, JsValue value)
-    {
-        if (ReferenceEquals(slot.Cell, value.Cell))
-        {
-            ref var layout = ref unsafe(Unsafe.As<JsValue, ValueLayout>(ref slot));
-            layout.Number = value._number;
-        }
-        else
-        {
-            slot = value;
-        }
-    }
-
-    /// <summary>Stores a number in a slot of the interpreter (see <see cref="Store"/>).</summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static void StoreNumber(ref JsValue slot, double value)
-    {
-        if (ReferenceEquals(slot.Cell, NumberCell.Instance))
-        {
-            ref var layout = ref unsafe(Unsafe.As<JsValue, ValueLayout>(ref slot));
-            layout.Number = value;
-        }
-        else
-        {
-            slot = new JsValue(value);
-        }
-    }
-
-    /// <summary>The fields of <see cref="JsValue"/> (same types, same order) with a writable number.</summary>
-    private struct ValueLayout
-    {
-#pragma warning disable CS0649 // Only the number is written
-        public JsCell? Cell;
-#pragma warning restore CS0649
-        public double Number;
-    }
 
     /// <summary>Gets the boolean of a boolean value.</summary>
     public bool AsBoolean() => ((BooleanCell)Cell!).Value;
@@ -154,19 +81,8 @@ public readonly struct JsValue : IEquatable<JsValue>
     /// <summary>Gets the integer of a BigInt value.</summary>
     public BigInteger AsBigInt() => ((JsBigInt)Cell!).Value;
 
-    internal JsBigInt AsJsBigInt() => (JsBigInt)Cell!;
-
     /// <summary>Gets the object of an object value.</summary>
     public JsObject AsObject() => (JsObject)Cell!;
-
-    /// <summary>Gets the object of the value, or null when the value is not an object.</summary>
-    public JsObject? TryGetObject() => Cell as JsObject;
-
-    /// <summary>Creates a boolean value.</summary>
-    public static JsValue FromBoolean(bool value) => value ? True : False;
-
-    /// <summary>Creates a number value.</summary>
-    public static JsValue FromNumber(double value) => new(value);
 
     /// <summary>Creates a string value.</summary>
     public static JsValue FromString(string value) => new(JsString.Create(value));
@@ -174,28 +90,14 @@ public readonly struct JsValue : IEquatable<JsValue>
     /// <summary>Creates a BigInt value.</summary>
     public static JsValue FromBigInt(BigInteger value) => new(new JsBigInt(value));
 
-    /// <summary>Creates an object value, or <c>null</c> when the object is null.</summary>
-    public static JsValue FromObject(JsObject? value) => value is null ? Null : new(value);
-
     /// <summary>Converts a number to a value.</summary>
     public static implicit operator JsValue(double value) => new(value);
 
     /// <summary>Converts a number to a value.</summary>
     public static implicit operator JsValue(int value) => new(value);
 
-    /// <summary>Converts a boolean to a value.</summary>
-    public static implicit operator JsValue(bool value) => FromBoolean(value);
-
     /// <summary>Converts a string to a value.</summary>
     public static implicit operator JsValue(string value) => FromString(value);
-
-    /// <summary>Converts an object to a value (<c>null</c> when the object is null).</summary>
-    public static implicit operator JsValue(JsObject? value) => FromObject(value);
-
-    /// <summary>Converts a symbol to a value.</summary>
-    public static implicit operator JsValue(JsSymbol value) => new(value);
-
-    internal static JsValue FromJsString(JsString value) => new(value);
 
     /// <summary>Compares two values with the SameValue algorithm (https://tc39.es/ecma262/#sec-samevalue).</summary>
     public bool Equals(JsValue other) => JsOperations.SameValue(this, other);
@@ -216,12 +118,6 @@ public readonly struct JsValue : IEquatable<JsValue>
         };
     }
 
-    /// <summary>Compares two values with the SameValue algorithm.</summary>
-    public static bool operator ==(JsValue left, JsValue right) => left.Equals(right);
-
-    /// <summary>Compares two values with the SameValue algorithm.</summary>
-    public static bool operator !=(JsValue left, JsValue right) => !left.Equals(right);
-
     /// <summary>Returns a representation of the value for debugging; it never runs JavaScript code (use <c>ToString</c> of <see cref="JsOperations"/> for the ToString operation).</summary>
     public override string ToString()
     {
@@ -237,6 +133,4 @@ public readonly struct JsValue : IEquatable<JsValue>
             _ => Cell is HoleCell ? "<hole>" : "[object " + AsObject().ClassName + "]",
         };
     }
-
-    private string DebuggerDisplay => Kind == JsValueKind.String ? "\"" + AsString() + "\"" : ToString();
 }

@@ -18,9 +18,3 @@ internal sealed class TemplateSite(string?[] cooked, string[] raw)
 
     public string[] Raw { get; } = raw;
 }
-
-/// <summary>The compile-time description of a class: its constructor and its source text.</summary>
-internal sealed record ClassTemplate(string Name, FunctionTemplate Constructor, bool HasHeritage, SourceText Source, int SourceStart, int SourceEnd);
-
-/// <summary>The compiled code of a module: the instantiation of its functions, its body and the slots of its environment.</summary>
-internal sealed record CompiledModule(FunctionTemplate Initialization, FunctionTemplate Body, ScopeInfo Environment, bool HasTopLevelAwait);

@@ -10,9 +10,6 @@ internal sealed class FunctionTemplate
 {
     public required string Name { get; init; }
 
-    /// <summary>Gets <see cref="Name"/> as a string value (shared by the functions created from the template).</summary>
-    public JsString NameValue => field ??= JsString.Create(Name);
-
     /// <summary>Gets the value of the <c>length</c> property (ExpectedArgumentCount).</summary>
     public required int Length { get; init; }
 
@@ -57,51 +54,7 @@ internal sealed class FunctionTemplate
     /// <summary>Gets the register that holds the completion value of script and eval code (-1 otherwise).</summary>
     public int CompletionRegister { get; init; } = -1;
 
-    public bool IsStrict => (Flags & FunctionTemplateFlags.Strict) != 0;
-
-    public bool IsArrow => (Flags & FunctionTemplateFlags.Arrow) != 0;
-
-    public bool IsAsync => (Flags & FunctionTemplateFlags.Async) != 0;
-
-    public bool IsGenerator => (Flags & FunctionTemplateFlags.Generator) != 0;
-
     public bool IsClassConstructor => (Flags & FunctionTemplateFlags.ClassConstructor) != 0;
-
-    public bool IsDerivedConstructor => (Flags & FunctionTemplateFlags.DerivedConstructor) != 0;
-
-    public string GetSourceText() => Source.Text[SourceStart..SourceEnd];
-
-    /// <summary>Gets the source range of the callee of a call instruction; false when it is unknown.</summary>
-    public bool TryGetCallSite(int pc, out int calleeStart, out int calleeEnd)
-    {
-        var callSites = CallSites;
-        var low = 0;
-        var high = (callSites.Length / 3) - 1;
-        while (low <= high)
-        {
-            var middle = (low + high) / 2;
-            var sitePc = callSites[middle * 3];
-            if (sitePc == pc)
-            {
-                calleeStart = callSites[(middle * 3) + 1];
-                calleeEnd = callSites[(middle * 3) + 2];
-                return true;
-            }
-
-            if (sitePc < pc)
-            {
-                low = middle + 1;
-            }
-            else
-            {
-                high = middle - 1;
-            }
-        }
-
-        calleeStart = -1;
-        calleeEnd = -1;
-        return false;
-    }
 
     /// <summary>Gets the source offset of an instruction.</summary>
     public int GetSourceOffset(int pc)

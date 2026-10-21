@@ -29,23 +29,8 @@ public sealed partial class JsEngine : IDisposable
     /// <summary>Gets the realm of the running execution context (the current realm).</summary>
     public JsRealm? CurrentRealm { get; internal set; }
 
-    /// <summary>Gets the depth of the running calls.</summary>
-    internal int CallDepth { get; set; }
-
-    /// <summary>Gets the free frames of the ordinary calls.</summary>
-    internal Interpreter.FramePool FramePool { get; } = new();
-
     /// <summary>Gets the roots of the shapes of the objects of the engine.</summary>
     internal ShapeRoots ShapeRoots { get; } = new();
-
-    /// <summary>[[ModuleAsyncEvaluationCount]] of the agent.</summary>
-    internal long ModuleAsyncEvaluationCount { get; set; }
-
-    /// <summary>The objects being joined by Array.prototype.join (the cycle detection of the browsers).</summary>
-    internal List<JsObject>? ArrayJoinStack { get; set; }
-
-    /// <summary>Gets the realms created by the engine.</summary>
-    public IReadOnlyList<JsRealm> Realms => _realms;
 
     /// <summary>Creates a realm with its intrinsics and an ordinary global object.</summary>
     public JsRealm CreateRealm()
@@ -66,40 +51,6 @@ public sealed partial class JsEngine : IDisposable
         s_current = this;
         return new JsEngineScope(previous);
     }
-
-    /// <summary>Enters a call: checks the recursion limit and makes the realm of the callee current; returns the previous realm.</summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal JsRealm? EnterNativeCall(JsRealm realm)
-    {
-        CheckCallDepth();
-        CallDepth++;
-        var previous = CurrentRealm;
-        CurrentRealm = realm;
-        return previous;
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal void ExitNativeCall(JsRealm? previousRealm)
-    {
-        CallDepth--;
-        CurrentRealm = previousRealm;
-    }
-
-    /// <summary>Throws a RangeError when the calls are too deep (the limit of the options, or the .NET stack is almost full).</summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal void CheckCallDepth()
-    {
-        if (CallDepth >= Options.RecursionLimit || !RuntimeHelpers.TryEnsureSufficientExecutionStack())
-        {
-            ThrowStackOverflow();
-        }
-
-        // A deep recursion without loops (e.g. a naive Fibonacci) must also check the limits
-        CountInterruptPoint();
-    }
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    private static void ThrowStackOverflow() => ThrowHelper.ThrowRangeError("Maximum call stack size exceeded");
 
     /// <summary>Releases the resources of the engine.</summary>
     public void Dispose()

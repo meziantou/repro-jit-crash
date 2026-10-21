@@ -380,8 +380,6 @@ internal sealed class BytecodeBuilder
     /// <summary>Sets the stack depth expected at a label that is only reached by an exception handler.</summary>
     public void SetLabelDepth(Label label, int depth) => _labelDepths[label.Id] = depth;
 
-    public int GetLabelPosition(Label label) => _labelPositions[label.Id];
-
     // ------------------------------------------------------------------------------------------------------------------
     // Try regions and positions
     // ------------------------------------------------------------------------------------------------------------------
@@ -453,9 +451,6 @@ internal sealed class BytecodeBuilder
 
     /// <summary>Gets whether an instruction has an inline cache (its last operand is the index of the cache).</summary>
     public static bool HasInlineCache(OpCode op) => op is OpCode.GetProperty or OpCode.GetMethod or OpCode.SetProperty or OpCode.DefineField or OpCode.LoadGlobal or OpCode.LoadGlobalOrUndefined;
-
-    /// <summary>Gets whether an instruction is a conditional jump with a comparison (left right ->).</summary>
-    public static bool IsCompareJump(OpCode op) => op is >= OpCode.JumpIfLessThan and <= OpCode.JumpIfStrictNotEqual;
 
     public static int GetOperandCount(OpCode op)
     {

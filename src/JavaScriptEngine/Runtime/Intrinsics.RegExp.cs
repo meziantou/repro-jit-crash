@@ -7,39 +7,4 @@ namespace Meziantou.Framework.JavaScriptEngine;
 /// </summary>
 internal sealed partial class Intrinsics
 {
-    private JsFunction? _regExp;
-    private JsObject? _regExpPrototype;
-    private JsFunction? _regExpPrototypeExec;
-    private JsObject? _regExpStringIteratorPrototype;
-    private bool _isRegExpInitializing;
-
-    /// <summary>%RegExp%</summary>
-    public JsFunction RegExp => EnsureRegExp()._regExp!;
-
-    /// <summary>%RegExp.prototype%</summary>
-    public JsObject RegExpPrototype => EnsureRegExp()._regExpPrototype!;
-
-    /// <summary>%RegExp.prototype.exec%</summary>
-    public JsFunction RegExpPrototypeExec => EnsureRegExp()._regExpPrototypeExec!;
-
-    /// <summary>%RegExpStringIteratorPrototype%</summary>
-    public JsObject RegExpStringIteratorPrototype => EnsureRegExp()._regExpStringIteratorPrototype!;
-
-    /// <summary>The legacy static properties of %RegExp% (RegExp.$1, RegExp.lastMatch...).</summary>
-    public RegExpLegacyStaticProperties RegExpLegacyStatics { get; } = new();
-
-    partial void InitializeRegExp()
-    {}
-
-    /// <summary>Creates the RegExp built-ins, if they are not created yet.</summary>
-    private Intrinsics EnsureRegExp()
-    {
-        if (_regExp is null && !_isRegExpInitializing)
-        {
-            _isRegExpInitializing = true;
-            (_regExp, _regExpPrototype, _regExpPrototypeExec, _regExpStringIteratorPrototype) = RegExpBuiltins.Initialize(this);
-        }
-
-        return this;
-    }
 }

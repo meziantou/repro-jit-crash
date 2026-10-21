@@ -22,19 +22,8 @@ internal sealed class NumberCell : JsCell
     }
 }
 
-internal sealed class NullCell : JsCell
-{
-    public static readonly NullCell Instance = new();
-
-    private NullCell()
-        : base(JsValueKind.Null)
-    {
-    }
-}
-
 internal sealed class BooleanCell : JsCell
 {
-    public static readonly BooleanCell True = new(value: true);
     public static readonly BooleanCell False = new(value: false);
 
     private BooleanCell(bool value)

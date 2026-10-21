@@ -20,10 +20,4 @@ public readonly struct JsEngineScope : IDisposable, IEquatable<JsEngineScope>
 
     /// <inheritdoc/>
     public override int GetHashCode() => _previous?.GetHashCode() ?? 0;
-
-    /// <summary>Compares two scopes.</summary>
-    public static bool operator ==(JsEngineScope left, JsEngineScope right) => left.Equals(right);
-
-    /// <summary>Compares two scopes.</summary>
-    public static bool operator !=(JsEngineScope left, JsEngineScope right) => !left.Equals(right);
 }

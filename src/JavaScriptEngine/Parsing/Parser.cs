@@ -65,12 +65,6 @@ internal sealed partial class Parser
         return parser.ParseProgram();
     }
 
-    public static Program ParseModule(SourceText source)
-    {
-        var parser = new Parser(source, ParserOptions.Module, isModule: true);
-        return parser.ParseProgram();
-    }
-
     internal static JsSyntaxErrorException CreateError(SourceText source, int position, string message)
     {
         position = Math.Clamp(position, 0, source.Length);

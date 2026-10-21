@@ -29,9 +29,6 @@ internal sealed class PropertyTable : PropertyMap
     /// <summary>Gets the number of times the table was compacted (the positions of the properties changed).</summary>
     public int Compactions { get; private set; }
 
-    /// <summary>Gets the number of properties.</summary>
-    public int Count => _count - _deletedCount;
-
     /// <summary>Finds the position of a key, or -1.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public int Find(in PropertyKey key)
@@ -65,34 +62,9 @@ internal sealed class PropertyTable : PropertyMap
         }
     }
 
-    public PropertyKey GetKey(int position)
-    {
-        ref var entry = ref _entries[position];
-        return PropertyKey.FromRaw(entry.KeyValue, entry.KeyIndex);
-    }
-
     public ref JsValue GetValue(int position) => ref _entries[position].Value;
 
     public ref PropertyFlags GetFlags(int position) => ref _entries[position].Flags;
-
-    public bool IsDeleted(int position) => _entries[position].IsDeleted;
-
-    /// <summary>Gets the number of positions to enumerate (including the deleted ones: check <see cref="IsDeleted"/>).</summary>
-    public int Capacity => _count;
-
-    /// <summary>Makes room for <paramref name="capacity"/> properties (the entries and the index are allocated once).</summary>
-    public void EnsureCapacity(int capacity)
-    {
-        if (capacity > _entries.Length)
-        {
-            Array.Resize(ref _entries, capacity);
-        }
-
-        if (capacity > IndexThreshold && (_index is null || _index.Length < capacity * 2))
-        {
-            BuildIndex(capacity);
-        }
-    }
 
     public int Add(in PropertyKey key, JsValue value, PropertyFlags flags)
     {
@@ -134,22 +106,6 @@ internal sealed class PropertyTable : PropertyMap
         }
 
         return position;
-    }
-
-    public void Remove(int position)
-    {
-        ref var entry = ref _entries[position];
-        entry.IsDeleted = true;
-        entry.Value = default;
-        _deletedCount++;
-        if (_deletedCount == _count)
-        {
-            // The table is empty: start again (keeps the enumeration cheap after many deletions)
-            Array.Clear(_entries, 0, _count);
-            _count = 0;
-            _deletedCount = 0;
-            _index = null;
-        }
     }
 
     private void Compact()
