@@ -3,7 +3,6 @@
     <RootNamespace>Meziantou.Framework.JavaScriptEngine</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../Language.Regex/Meziantou.Framework.Language.Regex.csproj" />
     <ProjectReference Include="../Unicode/Meziantou.Framework.Unicode.csproj" />
     <InternalsVisibleTo Include="Meziantou.Framework.JavaScriptEngine.Test262" />
   </ItemGroup>
