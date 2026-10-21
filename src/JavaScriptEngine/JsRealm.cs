@@ -14,7 +14,6 @@ public sealed partial class JsRealm
             GlobalObject = new JsObject(Intrinsics.ObjectPrototype);
             GlobalThis = new JsValue(GlobalObject);
             GlobalEnvironment = new Interpreter.GlobalEnvironment(this);
-            Intrinsics.Initialize();
         }
         finally
         {
