@@ -16,7 +16,6 @@ internal sealed class Frame
     public Frame(FunctionTemplate code, JsRealm realm, Environment environment, ReadOnlySpan<JsValue> arguments)
     {
         Values = new JsValue[code.RegisterCount + arguments.Length + code.MaxStack];
-        Code = code;
         arguments.CopyTo(Values.AsSpan(code.RegisterCount));
     }
 
