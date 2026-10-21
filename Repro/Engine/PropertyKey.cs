@@ -12,11 +12,6 @@ namespace Meziantou.Framework.JavaScriptEngine;
 [DebuggerDisplay("{ToString()}")]
 internal readonly struct PropertyKey : IEquatable<PropertyKey>
 {
-    private const uint NotAnIndex = uint.MaxValue;
-
-    // A string, a JsSymbol, or null for an array index
-    private readonly object? _value;
-    private readonly uint _index;
 
     public bool Equals(PropertyKey other)
     { throw null!; }

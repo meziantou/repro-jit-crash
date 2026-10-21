@@ -11,13 +11,9 @@ namespace Meziantou.Framework.JavaScriptEngine;
 internal sealed class JsString : JsCell, IEquatable<JsString>
 {
 
-    private string? _value;
-
     private JsString(string value)
         : base(JsValueKind.String)
     { }
-
-    public int Length { get; }
 
     public bool Equals([NotNullWhen(true)] JsString? other)
     { throw null!; }

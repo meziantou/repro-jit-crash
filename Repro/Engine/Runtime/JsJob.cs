@@ -7,6 +7,4 @@ namespace Meziantou.Framework.JavaScriptEngine;
 /// </summary>
 public class JsHost
 {
-    /// <summary>Gets the default host hooks.</summary>
-    internal static JsHost Default { get; } = new();
 }

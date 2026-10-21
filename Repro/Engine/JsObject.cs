@@ -9,16 +9,7 @@ namespace Meziantou.Framework.JavaScriptEngine;
 public partial class JsObject : JsCell
 {
 
-    // The named properties (and the array indices that are not in the elements): a shape shared with other objects and the
-    // values in its slots, or a property table of the object (dictionary mode, _slots is null). Null: an exotic object
-    // without properties yet (its named properties may not be ordinary).
-    private PropertyMap? _map;
-    private ObjectFlags _flags;
-    private JsObject? _prototype;
-
     internal JsObject(JsObject? prototype, ObjectClass objectClass = ObjectClass.Object)
         : base(JsValueKind.Object)
     { }
-
-    internal ObjectClass Class { get; set; }
 }

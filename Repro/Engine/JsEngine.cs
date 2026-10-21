@@ -17,9 +17,6 @@ public sealed partial class JsEngine : IDisposable
     public JsEngine(JsEngineOptions? options = null)
     { }
 
-    /// <summary>Gets the options of the engine.</summary>
-    public JsEngineOptions Options { get; }
-
     /// <summary>Creates a realm with its intrinsics and an ordinary global object.</summary>
     public JsRealm CreateRealm()
     {

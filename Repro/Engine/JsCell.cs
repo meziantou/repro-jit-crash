@@ -5,17 +5,4 @@ public abstract class JsCell
 {
     private protected JsCell(JsValueKind kind)
     { }
-
-    internal JsValueKind Kind { get; }
-}
-
-/// <summary>The cell of the number values (the number itself is stored in the <see cref="JsValue"/>).</summary>
-internal sealed class NumberCell : JsCell
-{
-    public static readonly NumberCell Instance = new();
-
-    private NumberCell()
-        : base(JsValueKind.Number)
-    {
-    }
 }
