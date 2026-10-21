@@ -94,7 +94,7 @@ internal static class DateBuiltins
     {
         var t = ThisTimeValue(thisValue);
         var ns = BigIntOperations.NumberToBigInt(t) * 1_000_000;
-        return TemporalOperations.CreateTemporalInstant((Int128)ns);
+        throw new NotSupportedException();
     }
 
     /// <summary>Date(...values)</summary>
