@@ -1,4 +1,3 @@
-using Meziantou.Framework.JavaScriptEngine.Intl;
 
 namespace Meziantou.Framework.JavaScriptEngine;
 
@@ -27,7 +26,6 @@ internal sealed partial class Intrinsics
             _date = DateBuiltins.Initialize(this);
 
             // The ECMA-402 amendments (toLocaleString, toLocaleDateString, toLocaleTimeString)
-            DateTimeFormatLocaleSensitiveBuiltins.Initialize(this);
         }
 
         return this;

@@ -1,4 +1,3 @@
-using Meziantou.Framework.JavaScriptEngine.Intl;
 
 namespace Meziantou.Framework.JavaScriptEngine;
 
@@ -78,8 +77,6 @@ internal sealed partial class Intrinsics
         temporal.DefineBuiltIn("Now", TemporalNowBuiltins.Initialize(this));
 
         // The ECMA-402 amendments of Temporal: the toLocaleString methods
-        DateTimeFormatLocaleSensitiveBuiltins.InitializeTemporal(this);
-        LocaleSensitiveBuiltins.InitializeTemporal(this);
         return temporal;
     }
 
